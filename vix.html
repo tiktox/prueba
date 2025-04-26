@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="stylesheet" href="styles1.css">
+ <script src="script1.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="description" content="deyconic Vix es una membresia innovadora diseñada para emprendedores y empresarios comprometidos con el crecimiento continuo y con el impulso empresarial a largo plazo. Nuestra membresía es un portal de excelencia que visualiza un ecosistema de oportunidades, conocimiento y conexiones estratégicos entre empresarios para fortalecer sus negocios y alcanzar sus metas empresariales.">
+    <meta name="keywords" content="impulsar mi empresa, exito empresarial, crecimiento empresarial, oportunidades de negocio, conocimiento empresarial, conexiones empresariales, emprendedores, empresarios, crecimiento continuo, impulso empresarial, portal de excelencia, ecosistema de oportunidades, conocimiento y conexiones estratégicas, fortalecer negocios, alcanzar metas empresariales, membresia innovadora, emprendedores y empresarios, ¿Qué hacer para acer crecer mi empresa?, ¿Cómo impulsar mi negocio?, ¿Cómo alcanzar el éxito empresarial?, ¿Cómo fortalecer mi negocio?, ¿Cómo alcanzar mis metas empresariales?, ¿Cómo impulsar mi empresa?, ¿Cómo crecer mi negocio?, ¿Cómo alcanzar el éxito empresarial?,">
+    <meta name="author" content="Deyconic">
+    <!-- Open Graph (Para Facebook) -->
+    <meta property="og:title" content="Membresía deyconic Vix - ofrece una experiencia integral que va más allá de los beneficios tradicionales.">
+    <meta property="og:description" content="Empresa líder en desarrollo web y gestión empresarial.">
+    <meta property="og:image" content="https://scontent.fhex5-2.fna.fbcdn.net/v/t1.15752-9/482169794_889373686528908_3990815244860795325_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=103&ccb=1-7&_nc_sid=0024fc&_nc_ohc=pfyFlYadTWkQ7kNvgGMOWao&_nc_oc=Adg4QyURi-L8KPZ37qG0ulpQT7I30adsoJOtcWF6LD51Ie4C8wHT0LBXZzl854zaOVpl8p0u6G4tEmXMR5ieLD1l&_nc_ad=z-m&_nc_cid=1468&_nc_zt=23&_nc_ht=scontent.fhex5-2.fna&oh=03_Q7cD1wFrl0-r6THSgCpXsAxxCbye-RSj5rB3eLfceKnv5cvnLA&oe=67F6D578">
+    <meta property="og:url" content="https://deyconic.vercel.app/vix.html">
+    <!-- Twitter Cards -->
+    <meta name="twitter:title" content="Vix - Deyconic - Impulso empresarial">
+    <meta name="twitter:description" content="Empresa líder en desarrollo web y gestión empresarial.">
+    <meta name="twitter:image" content="https://deyconic.vercel.app/vix.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Deyconic Vix, innovación digital, startups RD, transformación digital, gestión de proyectos RD">
+    <title>Deyconic Vix - Impulsa tu empresa con nuestra membresia.</title>    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+    <header>
+        <nav>
+            <a href="https://deyconic.vercel.app/#" class="logo">Deyconic</a>
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="https://deyconic.vercel.app/#">Inicio</a>
+                <a href="https://deyconic.vercel.app/#servicios">Servicios</a>
+                <a href="https://deyconic.vercel.app/#nosotros">Nosotros</a>
+                <a href="https://deyconic.vercel.app/#portafolio">Portafolio</a>
+                <a href="https://deyconic.vercel.app/#noticias">Noticias</a>
+                <a href="https://deyconic.vercel.app/#actualizaciones">Actualizaciones</a>
+                <a href="https://deyconic.vercel.app/#eventos">Eventos</a>
+                <a href="https://deyconic.vercel.app/#preguntas">Preguntas</a>
+                <a href="https://deyconic.vercel.app/#soporte">soporte</a>
+                <a href="https://deyconic.vercel.app/#contacto">Contacto</a>
+            </div>
+        </nav>
+    </header>
+    <html lang="es">
+        <style>
+            :root {
+                --primary: #7000ff;
+                --secondary: #ff5e00;
+                --dark: #202020;
+                --light: #f8f8f8;
+                --success: #28a745;
+            }
+            
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            
+            .cta-button {
+                background-color: rgb(0, 0, 0);
+                color: #fefffe;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 25px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+            
+            .cta-button:hover {
+                background-color:#ffffff;
+                color: rgb(0, 0, 0);
+                transform: translateY(-2px);
+            }
+            
+           
+            .hero-content {
+                position: relative;
+                z-index: 1;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+                margin-bottom: 20px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+                max-width: 800px;
+                margin: 0 auto 30px auto;
+            }
+            
+            .benefits {
+                padding: 80px 0;
+                background-color: #ACD8F5;
+            }
+            
+            .section-title {
+                text-align: center;
+                margin-bottom: 60px;
+                font-size: 2.5rem;
+                color: #000000;
+            }
+            
+            .benefits-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            
+            .benefit-card {
+                background-color: white;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            
+            .benefit-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            }
+            
+            .benefit-card-header {
+                background: #ffffff;
+                color: rgb(0, 0, 0);
+                padding: 20px;
+                text-align: center;
+            }
+            
+            .benefit-card-body {
+                padding: 20px;
+            }
+            
+            .benefit-card h3 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+            
+            .benefit-card p {
+                color: #666;
+                margin-bottom: 15px;
+            }
+            
+            .benefit-card ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+            
+            .benefit-card li {
+                margin-bottom: 8px;
+                padding-left: 25px;
+                position: relative;
+            }
+            
+            .benefit-card li::before {
+                content: '✓';
+                color: var(--primary);
+                position: absolute;
+                left: 0;
+                font-weight: bold;
+            }
+            
+            .signup {
+                padding: 100px 0;
+                background: #ACD8F5;
+                color: white;
+                text-align: center;
+            }
+            
+            .signup h2 {
+                color: #000000;
+                margin-bottom: 30px;
+                font-size: 2.5rem;
+            }
+            
+            .signup p {
+                color: #000000;
+                max-width: 800px;
+                margin: 0 auto 40px auto;
+                font-size: 1.2rem;
+            }
+            
+            .signup-form {
+                max-width: 500px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+                text-align: left;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: var(--dark);
+            }
+            
+            .form-group input, .form-group select {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1rem;
+                transition: border-color 0.3s ease;
+            }
+            
+            .form-group input:focus, .form-group select:focus {
+                border-color: var(--primary);
+                outline: none;
+            }
+            
+            .submit-btn {
+                background:#000000;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 25px;
+                font-size: 1.1rem;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .submit-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+            
+            .form-message {
+                display: none;
+                text-align: center;
+                padding: 15px;
+                margin-top: 20px;
+                border-radius: 5px;
+            }
+            
+            .form-message.success {
+                background-color: rgba(40, 167, 69, 0.1);
+                border: 1px solid var(--success);
+                color: var(--success);
+            }
+            
+        /* Footer */
+        footer {
+            color:#000000;
+            background: #ffffff;
+            color: #000000;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+        color:#000000;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #000000;
+            text-decoration: #000000;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgb(0, 0, 0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color:#ffffff;
+            background: #008cff;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+            /* Newsletter */
+            .newsletter {
+                display: flex;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .newsletter input {
+                flex: 1;
+                padding: 0.8rem;
+                border: none;
+                border-radius: 5px;
+                background: rgba(255, 255, 255, 0.1);
+                color: #000000;
+            }
+
+            .newsletter button {
+                padding: 0.8rem 1.5rem;
+                background: #000000;
+                border: none;
+                border-radius: 5px;
+                color: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .newsletter button:hover {
+                background: rgb(0, 131, 253);
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Arial', sans-serif;
+                min-height: 100vh;
+                position: relative;
+                overflow-x: hidden;
+            }
+            
+        
+             
+        </style>
+    </head>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Membresía Deyconic Vix - Hero con Video</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+            
+            .hero {
+                position: relative;
+                color: white;
+                text-align: center;
+                padding: 120px 0;
+                overflow: hidden;
+                height: 100vh;
+            }
+            
+            .video-background {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                object-fit: cover;
+            }
+            
+            .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 0;
+            }
+            
+            .hero-content {
+                position: relative;
+                z-index: 1;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+            
+            .cta-button {
+                display: inline-block;
+                padding: 12px 30px;
+                background: #000000;
+                color: white;
+                text-decoration: none;
+                border-radius: 30px;
+                font-weight: bold;
+                transition: background 0.3s;
+            }
+            
+            .cta-button:hover {
+                background: #00ff2a;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <section class="hero">
+            <!-- Video de fondo -->
+            <video autoplay muted loop class="video-background">
+                <source src="https://videos.pexels.com/video-files/5725960/5725960-sd_640_360_30fps.mp4" type="video/mp4">
+                <!-- Nota: URL de ejemplo reemplazada por una URL de CDN válida. En producción, deberías usar la URL de tu propio video -->
+            </video>
+            
+            <!-- Overlay para mejorar la legibilidad del texto -->
+            <div class="overlay"></div>
+            
+            <div class="hero-content">
+                <h1>Membresía Deyconic Vix</h1>
+                <p>Desbloquea oportunidades exclusivas, conecta con profesionales y potencia tu crecimiento con nuestra membresía premium.</p>
+                <a href="#signup" class="cta-button">Únete Ahora</a>
+            </div>
+        </section>
+        
+        <script>
+            // Asegurarse de que el video se reproduzca correctamente en diferentes navegadores
+            document.addEventListener('DOMContentLoaded', function() {
+                const video = document.querySelector('.video-background');
+                
+                // Intentar reproducir el video automáticamente
+                video.play().catch(function(error) {
+                    console.log('Error al reproducir el video automáticamente:', error);
+                    
+                    // Agregar listener para reproducir el video con interacción del usuario si es necesario
+                    document.body.addEventListener('click', function() {
+                        video.play();
+                    }, { once: true });
+                });
+                
+                // Reiniciar el video cuando termine (por si acaso loop no funciona en algún navegador)
+                video.addEventListener('ended', function() {
+                    video.currentTime = 0;
+                    video.play();
+                });
+            });
+        </script>
+    </body>
+    </html>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <style>
+            .about-vix {
+                background-color: #ACD8F5;
+                padding: 80px 0;
+                text-align: center;
+            }
+            
+            .about-vix .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            
+            .about-vix-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 50px;
+            }
+            
+            .about-vix-text {
+                flex: 1;
+                text-align: left;
+            }
+            
+            .about-vix-image {
+                flex: 1;
+                max-width: 500px;
+            }
+            
+            .about-vix-image img {
+                width: 100%;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            
+            .about-vix h2 {
+                font-size: 2.5rem;
+                color: #000000;
+                border-radius: 20%;
+                padding: 0.0.01px 05px;
+                margin-bottom: 30px;
+                position: relative;
+                display: inline-block;
+            }
+            
+            .about-vix h2::after {
+                color:#000000;
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background-color: #ACD8F5;
+            }
+            
+            .about-vix p {
+                color: #000000;
+                line-height: 1.6;
+                margin-bottom: 20px;
+                font-size: 1.1rem;
+            }
+            
+            .about-vix-values {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            .about-vix-value {
+                background-color: #f8f8f8;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                transition: transform 0.3s ease;
+            }
+            
+            .about-vix-value:hover {
+                transform: translateY(-5px);
+            }
+            
+            .about-vix-value h3 {
+                color: #000000;
+                margin-bottom: 10px;
+            }
+            
+            .about-vix-value p {
+                color: #666;
+                font-size: 0.9rem;
+            }
+            
+            @media (max-width: 768px) {
+                .about-vix-content {
+                    flex-direction: column;
+                }
+                
+                .about-vix-values {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <section class="about-vix" id="about-vix">
+            <div class="container">
+                <div class="about-vix-content">
+                    <div class="about-vix-text">
+                        <h2>Deyconic Vix</h2>
+                        <p>Es una membresia innovadora diseñada para emprendedores y empresarios comprometidos con el crecimiento continuo y con el impulso empresarial a largo plazo. Nuestra membresía es un portal de excelencia que visualiza un ecosistema de oportunidades, conocimiento y conexiones estratégicos entre empresarios para fortalecer sus negocios y alcanzar sus metas empresariales.</p>
+                        
+                        <p>Creemos que el éxito se construye a través de la colaboración, el aprendizaje constante y el acceso a recursos de primer nivel. Por eso, Deyconic Vix ofrece una experiencia integral que va más allá de los beneficios tradicionales.</p>
+                        
+                        <div class="about-vix-values">
+                            <div class="about-vix-value">
+                                <h3>Innovación</h3>
+                                <p>Impulsamos soluciones creativas y disruptivas.</p>
+                            </div>
+                            <div class="about-vix-value">
+                                <h3>Colaboración</h3>
+                                <p>Conectamos mentes brillantes y proyectos prometedores.</p>
+                            </div>
+                            <div class="about-vix-value">
+                                <h3>Crecimiento</h3>
+                                <p>Potenciamos el desarrollo personal y profesional.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-vix-image">
+                        <img src="https://scontent.fsti4-2.fna.fbcdn.net/v/t1.15752-9/486084426_2397390693955344_5153654698443839473_n.png?_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_ohc=U4HtVI5Ub6oQ7kNvgGYxoKg&_nc_oc=AdlufS_2keZEcT_8_lz1Qy483wm9AJ_k8idK40D6Hv33fCVX84DEt6kfe_S0eJjpUaY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fsti4-2.fna&oh=03_Q7cD1wFUfkRkETDRXfMLh3O-mL1q7s0EZsyEmJb5buxCQ46IEw&oe=680CCA59" alt="Deyconic Vix" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+    </html>
+        
+        <section class="benefits" id="benefits">
+            <div class="container">
+                <h2 class="section-title">Beneficios Exclusivos</h2>
+                <div class="benefits-list">
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Acceso Exclusivo a Eventos</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Conferencias y charlas magistrales</li>
+                                <li>Eventos de networking profesional</li>
+                                <li>Festivales y lanzamientos exclusivos</li>
+                                <li>Asientos reservados en eventos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Descuentos en Servicios</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Desarrollo web y apps</li>
+                                <li>Publicidad y promoción</li>
+                                <li>Asesorías y consultorías</li>
+                                <li>Ahorro significativo para tu negocio</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Comunidad Privada</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Red exclusiva de emprendedores</li>
+                                <li>Foros y grupos especializados</li>
+                                <li>Apoyo y consejos de expertos</li>
+                                <li>Conexiones valiosas para crecer</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Prioridad en Actualizaciones</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Beta testing exclusivo</li>
+                                <li>Feedback directo con desarrolladores</li>
+                                <li>Acceso anticipado a nuevas funciones</li>
+                                <li>Mantente a la vanguardia</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Publicidad Destacada</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Espacios exclusivos para anuncios</li>
+                                <li>Menciones en redes y newsletter</li>
+                                <li>Posicionamiento preferencial</li>
+                                <li>Mayor alcance para tu marca</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Soporte Prioritario</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Respuesta en menos de 24 horas</li>
+                                <li>Soporte técnico avanzado</li>
+                                <li>Canal de atención exclusivo</li>
+                                <li>Asistencia personalizada</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Cursos y Talleres</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Emprendimiento y negocios digitales</li>
+                                <li>Marketing y redes sociales</li>
+                                <li>Desarrollo web y tecnología</li>
+                                <li>Materiales exclusivos y certificaciones</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Certificaciones Digitales</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Validación de conocimientos</li>
+                                <li>Mejora tu perfil profesional</li>
+                                <li>Certificados avalados por deyconic</li>
+                                <li>Compartibles en plataformas laborales</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Oportunidades de Colaboración</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Convocatorias para proyectos</li>
+                                <li>Alianzas con empresas y emprendedores</li>
+                                <li>Concursos y hackatones exclusivos</li>
+                                <li>Potencia tus ideas con respaldo</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-card-header">
+                            <h3>Merchandising Exclusivo</h3>
+                        </div>
+                        <div class="benefit-card-body">
+                            <ul>
+                                <li>Camisetas y sudaderas personalizadas</li>
+                                <li>Tazas, stickers y accesorios</li>
+                                <li>Kit de bienvenida especial</li>
+                                <li>Productos exclusivos de la marca</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="signup" id="signup">
+            <div class="container">
+                <h2>Únete a Deyconic Vix Hoy</h2>
+                <p>Completa el formulario a continuación para ser parte de nuestra membresía exclusiva y comenzar a disfrutar de todos los beneficios.</p>
+                
+                <div class="signup-form">
+                    <form id="vix-form">
+                        <div class="form-group">
+                            <label for="name">Nombre Completo</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Empresa/Emprendimiento (opcional)</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="membership">Plan de Membresía</label>
+                            <select id="membership" name="membership" required>
+                                <option value="">Selecciona un plan</option>
+                                <option value="monthly">Mensual - RD$1,500/mes</option>
+                                <option value="quarterly">Trimestral - RD$4,000/trimestre</option>
+                                <option value="annual">Anual - RD$15,000/año (2 meses gratis)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Unirme a Deyconic Vix</button>
+                    </form>
+                    
+                    <div class="form-message success" id="success-message">
+                        ¡Gracias por unirte a Deyconic Vix! Te hemos enviado un correo con los detalles de tu membresía.
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            // Form submission
+            document.getElementById('vix-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validación simple
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const membership = document.getElementById('membership').value;
+                
+                if (!name || !email || !phone || !membership) {
+                    alert('Por favor, completa todos los campos requeridos.');
+                    return;
+                }
+                
+                // Aquí normalmente enviarías los datos a un servidor
+                // Simulación de envío exitoso
+                const form = document.getElementById('vix-form');
+                const successMessage = document.getElementById('success-message');
+                
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+                
+                // Reiniciar formulario después de 5 segundos (solo para demo)
+                setTimeout(() => {
+                    form.reset();
+                    form.style.display = 'block';
+                    successMessage.style.display = 'none';
+                }, 5000);
+            });
+            
+            // Smooth scroll para los enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>
+    <footer>
+      <div class="footer-content">
+          <div class="footer-section">
+              <h3>Deyconic</h3>
+              <p>Estamos transformando el futuro digital de las empresas con soluciones innovadoras y personalizadas.</p>
+              <div class="social-links">
+                  <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                  <a href="https://www.linkedin.com/in/dominican-hubvix-178372355/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="https://www.instagram.com/hubvix?igsh=bG4wd2pzYjdicW52&utm_source=qr" class="social-link"><i class="fab fa-instagram"></i></a>
+              </div>
+          </div>
+          <div class="footer-section">
+              <h3>Enlaces Rápidos</h3>
+              <ul class="footer-links">
+                  <li><a href="#">Inicio</a></li>
+                  <li><a href="#openEvaluation">Servicios</a></li>
+                  <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                  <li><a href="#portafolio">Portafolio</a></li>
+              </ul>
+          </div>
+          
+          <div class="footer-section">
+              <h3>Newsletter</h3>
+              <p>Suscríbete para recibir las últimas noticias y actualizaciones.</p>
+              <div class="newsletter">
+                  <input type="email" placeholder="Tu email">
+                  <button>Suscribirse</button>
+              </div>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2025 Deyconic. Todos los derechos reservados.</p>
+      </div>
+  </footer>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Deyconic Vix",
+      "url": "https://deyconic.vercel.app/vix.html/",
+      "image": "https://deyconic.vercel.app/img/logo-deyconic.jpg",
+      "description": "Deyconic Vix es una membresia innovadora diseñada para emprendedores y empresarios comprometidos con el crecimiento continuo y con el impulso empresarial a largo plazo. Nuestra membresía es un portal de excelencia que visualiza un ecosistema de oportunidades, conocimiento y conexiones estratégicos entre empresarios para fortalecer sus negocios y alcanzar sus metas empresariales.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Av. Las Colinas",
+        "addressLocality": "Santiago de los Caballeros",
+        "addressCountry": "DO"
+      },
+      "telephone": "+1-829-931-5704", /* Añade un número real */
+      "openingHours": "Mo-Fr 08:00-06:00"
+    }
+    </script>
