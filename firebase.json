@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "storage": {
+    "rules": "src/firebase/config.ts"
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}
