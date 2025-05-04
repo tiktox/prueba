@@ -1,0 +1,127 @@
+[debug] [2025-05-04T16:13:16.789Z] ----------------------------------------------------------------------
+[debug] [2025-05-04T16:13:16.797Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-05-04T16:13:16.799Z] CLI Version:   13.32.0
+[debug] [2025-05-04T16:13:16.799Z] Platform:      win32
+[debug] [2025-05-04T16:13:16.800Z] Node Version:  v22.14.0
+[debug] [2025-05-04T16:13:16.800Z] Time:          Sun May 04 2025 04:13:16 GMT-1200 (GMT-12:00)
+[debug] [2025-05-04T16:13:16.801Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-04T16:13:17.534Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-04T16:13:17.535Z] > authorizing via signed-in user (sp9979182@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\YOKEIRY\Desktop\Proyectos\trabajo\pinterest\project
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-05-04T16:13:26.355Z] Using project from CLI flag: hibrown
+[debug] [2025-05-04T16:13:26.357Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:13:26.358Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:13:26.360Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/hibrown [none]
+[debug] [2025-05-04T16:13:28.129Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/hibrown 200
+[debug] [2025-05-04T16:13:28.130Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/hibrown {"projectId":"hibrown","projectNumber":"5218708938","displayName":"hibrown","name":"projects/hibrown","resources":{"hostingSite":"hibrown","realtimeDatabaseInstance":"hibrown-default-rtdb"},"state":"ACTIVE","etag":"1_e9b74ead-77e6-468d-84df-819cfb118577"}
+[info] i  Using project hibrown (hibrown) 
+[info] 
+=== Hosting Setup
+[debug] [2025-05-04T16:13:28.160Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:13:28.160Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:13:28.160Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/hibrown [none]
+[debug] [2025-05-04T16:13:28.632Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/hibrown 200
+[debug] [2025-05-04T16:13:28.632Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/hibrown {"projectId":"hibrown","projectNumber":"5218708938","displayName":"hibrown","name":"projects/hibrown","resources":{"hostingSite":"hibrown","realtimeDatabaseInstance":"hibrown-default-rtdb"},"state":"ACTIVE","etag":"1_e9b74ead-77e6-468d-84df-819cfb118577"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2025-05-04T16:14:53.710Z] Error: Path contains invalid characters: C:\Users\YOKEIRY\Desktop\Proyectos\trabajo\pinterest\project\https:\localhost:5173
+    at checkPath (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\fs-extra\lib\mkdirs\utils.js:16:21)
+    at module.exports.makeDirSync (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\fs-extra\lib\mkdirs\make-dir.js:21:3)
+    at Object.createFileSync (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\fs-extra\lib\ensure\file.js:59:45)
+    at Config.writeProjectFile (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\config.js:159:12)
+    at C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\config.js:193:22
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async doSetup (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\hosting\index.js:173:13)
+    at async init (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\index.js:41:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2025-05-04T16:15:23.991Z] ----------------------------------------------------------------------
+[debug] [2025-05-04T16:15:24.013Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-05-04T16:15:24.014Z] CLI Version:   13.32.0
+[debug] [2025-05-04T16:15:24.014Z] Platform:      win32
+[debug] [2025-05-04T16:15:24.015Z] Node Version:  v22.14.0
+[debug] [2025-05-04T16:15:24.016Z] Time:          Sun May 04 2025 04:15:24 GMT-1200 (GMT-12:00)
+[debug] [2025-05-04T16:15:24.016Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-04T16:15:24.650Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-04T16:15:24.651Z] > authorizing via signed-in user (sp9979182@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\YOKEIRY\Desktop\Proyectos\trabajo\pinterest\project
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-05-04T16:15:33.331Z] Using project from CLI flag: hibrown
+[debug] [2025-05-04T16:15:33.338Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:15:33.338Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:15:33.346Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/hibrown [none]
+[debug] [2025-05-04T16:15:34.091Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/hibrown 200
+[debug] [2025-05-04T16:15:34.092Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/hibrown {"projectId":"hibrown","projectNumber":"5218708938","displayName":"hibrown","name":"projects/hibrown","resources":{"hostingSite":"hibrown","realtimeDatabaseInstance":"hibrown-default-rtdb"},"state":"ACTIVE","etag":"1_e9b74ead-77e6-468d-84df-819cfb118577"}
+[info] i  Using project hibrown (hibrown) 
+[info] 
+=== Hosting Setup
+[debug] [2025-05-04T16:15:34.106Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:15:34.107Z] Checked if tokens are valid: true, expires at: 1746376433577
+[debug] [2025-05-04T16:15:34.107Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/hibrown [none]
+[debug] [2025-05-04T16:15:34.359Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/hibrown 200
+[debug] [2025-05-04T16:15:34.360Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/hibrown {"projectId":"hibrown","projectNumber":"5218708938","displayName":"hibrown","name":"projects/hibrown","resources":{"hostingSite":"hibrown","realtimeDatabaseInstance":"hibrown-default-rtdb"},"state":"ACTIVE","etag":"1_e9b74ead-77e6-468d-84df-819cfb118577"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2025-05-04T16:16:22.415Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2025-05-04T16:16:22.893Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2025-05-04T16:16:22.894Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"11.6.1","browserURL":"https://www.gstatic.com/firebasejs/11.6.1/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/11.6.1/firebase.tgz"},"live":{"version":"11.6","browserURL":"https://www.gstatic.com/firebasejs/live/11.6/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/11.6/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/11.6.1/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/11.6.1/firebase-auth/cordova.js","auth/web-extension":"https://www.gstatic.com/firebasejs/11.6.1/firebase-auth/web-extension.js","functions":"https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore/lite.js","installations":"https://www.gstatic.com/firebasejs/11.6.1/firebase-installations.js","storage":"https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/11.6.1/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/11.6.1/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js","vertexai":"https://www.gstatic.com/firebasejs/11.6.1/firebase-vertexai.js","data-connect":"https://www.gstatic.com/firebasejs/11.6.1/firebase-data-connect.js","firestore.memory":"https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.memory.js"}}
+[debug] [2025-05-04T16:16:22.899Z] Error: Path contains invalid characters: C:\Users\YOKEIRY\Desktop\Proyectos\trabajo\pinterest\project\https:\localhost:5173
+    at checkPath (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\fs-extra\lib\mkdirs\utils.js:16:21)
+    at module.exports.makeDirSync (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\fs-extra\lib\mkdirs\make-dir.js:21:3)
+    at Object.createFileSync (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\fs-extra\lib\ensure\file.js:59:45)
+    at Config.writeProjectFile (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\config.js:159:12)
+    at C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\config.js:193:22
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async doSetup (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\hosting\index.js:177:9)
+    at async init (C:\Users\YOKEIRY\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\index.js:41:9)
+[error] 
+[error] Error: An unexpected error has occurred.
