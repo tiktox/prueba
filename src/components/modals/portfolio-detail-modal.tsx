@@ -3,7 +3,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { CalendarDays, Tag, User, X, ExternalLink, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { CalendarDays, Tag, User, X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -30,33 +30,61 @@ interface PortfolioDetailModalProps {
 export default function PortfolioDetailModal({ item, isOpen, onClose }: PortfolioDetailModalProps) {
   const [currentImage, setCurrentImage] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [animationDirection, setAnimationDirection] = useState<number>(0); // 0: none, 1: next, -1: prev
 
   useEffect(() => {
     if (item) {
+      setAnimationDirection(0); // Reset direction for a new item, so it fades in
       setCurrentImage(item.mainImage);
-      setCurrentImageIndex(0); // Reset to main image index
+      setCurrentImageIndex(0); 
     }
   }, [item]);
 
   if (!item) return null;
 
-  const allImages = [item.mainImage, ...item.thumbnails.filter(thumb => thumb !== item.mainImage)];
+  const allImages = [item.mainImage, ...item.thumbnails.filter(thumb => thumb !== item.mainImage && thumb)]; // Ensure thumbnails are valid
 
-  const handleThumbnailClick = (imageSrc: string, index: number) => {
-    setCurrentImage(imageSrc);
-    setCurrentImageIndex(index);
+  const changeImageWithDirection = (newIndex: number, direction: number) => {
+    setAnimationDirection(direction);
+    setCurrentImageIndex(newIndex);
+    setCurrentImage(allImages[newIndex]);
   };
 
   const nextImage = () => {
     const newIndex = (currentImageIndex + 1) % allImages.length;
-    setCurrentImageIndex(newIndex);
-    setCurrentImage(allImages[newIndex]);
+    changeImageWithDirection(newIndex, 1);
   };
 
   const prevImage = () => {
     const newIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-    setCurrentImageIndex(newIndex);
-    setCurrentImage(allImages[newIndex]);
+    changeImageWithDirection(newIndex, -1);
+  };
+
+  const handleThumbnailClick = (imageSrc: string, index: number) => {
+    let direction = 0;
+    if (index > currentImageIndex) {
+      direction = 1;
+    } else if (index < currentImageIndex) {
+      direction = -1;
+    }
+    changeImageWithDirection(index, direction);
+  };
+
+  const imageVariants = {
+    enter: (direction: number) => ({
+      x: direction === 0 ? 0 : direction > 0 ? 50 : -50,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction === 0 ? 0 : direction > 0 ? -50 : 50, // Note: for exit, direction is of the new image, so old image goes opposite
+      opacity: 0,
+    }),
   };
 
 
@@ -69,15 +97,17 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
             </Button>
         </DialogClose>
         
-        <div className="relative h-56 sm:h-64 md:h-80 lg:h-96 w-full flex-shrink-0 group">
-          <AnimatePresence initial={false} mode="wait">
+        <div className="relative h-56 sm:h-64 md:h-80 lg:h-96 w-full flex-shrink-0 group overflow-hidden">
+          <AnimatePresence initial={false} custom={animationDirection} mode="wait">
             <motion.div
-              key={currentImage}
-              className="absolute inset-0"
-              initial={{ opacity: 0, x: currentImageIndex > 0 ? 50 : (currentImageIndex < 0 ? -50 : 0) }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: currentImageIndex > 0 ? -50 : 50 }}
+              key={currentImage} // Using currentImage string as key
+              custom={animationDirection}
+              variants={imageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
               transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute inset-0"
             >
               <Image
                 src={currentImage || "https://picsum.photos/1200/800"}
@@ -85,7 +115,8 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
                 layout="fill"
                 objectFit="cover"
                 data-ai-hint={item.aiHint || "project image"}
-                className="rounded-t-lg"
+                className="rounded-t-lg" 
+                priority={true} // Prioritize loading of current image
               />
             </motion.div>
           </AnimatePresence>
@@ -120,7 +151,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
                 key={idx} 
                 onClick={() => handleThumbnailClick(thumb, idx)}
                 className={`flex-shrink-0 w-16 h-12 sm:w-20 sm:h-14 relative rounded-md overflow-hidden border-2 ${
-                  currentImage === thumb 
+                  currentImageIndex === idx // Use currentImageIndex for active state
                     ? 'border-primary ring-2 ring-primary ring-offset-2 ring-offset-muted' 
                     : 'border-transparent hover:border-primary/70'
                 } focus:outline-none focus:ring-2 focus:ring-primary/70 focus:ring-offset-1 focus:ring-offset-muted transition-all duration-200 ease-in-out`}
