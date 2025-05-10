@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import PortfolioDetailModal, { type PortfolioItem } from "@/components/modals/portfolio-detail-modal";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye } from "lucide-react";
+import { Eye, Check, ArrowRight } from "lucide-react";
 
 const portfolioData: PortfolioItem[] = [
   {
@@ -104,15 +104,16 @@ export default function PortfolioSection() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
-          className="flex justify-center space-x-2 sm:space-x-4 mb-12"
+          className="flex justify-center flex-wrap gap-2 sm:gap-4 mb-12"
         >
           {filters.map(filter => (
             <Button
               key={filter}
               variant={activeFilter === filter ? "default" : "outline"}
               onClick={() => setActiveFilter(filter)}
-              className="rounded-full px-4 sm:px-6 py-2 text-sm sm:text-base transition-all duration-300"
+              className="rounded-full px-4 sm:px-6 py-2 text-sm sm:text-base transition-all duration-300 flex items-center"
             >
+              {activeFilter === filter && <Check className="mr-2 h-4 w-4" />}
               {filter}
             </Button>
           ))}
@@ -134,7 +135,7 @@ export default function PortfolioSection() {
                 onClick={() => handleItemClick(item)}
                 className="cursor-pointer"
               >
-                <Card className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-xl">
+                <Card className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl hover:border-primary">
                   <div className="relative h-60 w-full overflow-hidden">
                     <Image
                       src={item.mainImage}
@@ -144,17 +145,18 @@ export default function PortfolioSection() {
                       className="transform group-hover:scale-105 transition-transform duration-500"
                       data-ai-hint={item.aiHint || "project image"}
                     />
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <Eye className="h-12 w-12 text-white" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <Eye className="h-12 w-12 text-white/90" />
                     </div>
                   </div>
-                  <CardContent className="p-6 flex-grow flex flex-col justify-between bg-background">
+                  <CardContent className="p-6 flex-grow flex flex-col bg-background">
                     <div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
+                      <h3 className="text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
                       <p className="text-sm text-primary font-medium mb-3">{item.category}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{item.description}</p>
                     </div>
-                    <Button variant="link" className="p-0 h-auto text-accent self-start hover:underline">
-                      Ver detalles
+                    <Button variant="outline" size="sm" className="mt-auto self-start group/button hover:bg-primary hover:text-primary-foreground border-primary text-primary">
+                      Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform" />
                     </Button>
                   </CardContent>
                 </Card>

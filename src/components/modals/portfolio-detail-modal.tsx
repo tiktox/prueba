@@ -51,10 +51,19 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
         </div>
         
         {item.thumbnails && item.thumbnails.length > 0 && (
-          <div className="flex p-2 bg-muted space-x-2 overflow-x-auto">
+          <div className="flex p-3 bg-muted space-x-2 overflow-x-auto">
             {item.thumbnails.map((thumb, idx) => (
-              <button key={idx} onClick={() => setCurrentImage(thumb)} className={`w-20 h-14 relative rounded overflow-hidden border-2 ${currentImage === thumb ? 'border-primary' : 'border-transparent'} hover:border-primary transition`}>
-                <Image src={thumb} alt={`Thumbnail ${idx + 1}`} layout="fill" objectFit="cover" data-ai-hint={item.aiHint || "project thumbnail"}/>
+              <button 
+                key={idx} 
+                onClick={() => setCurrentImage(thumb)} 
+                className={`w-20 h-14 relative rounded-md overflow-hidden border-2 ${
+                  currentImage === thumb 
+                    ? 'border-primary ring-2 ring-primary ring-offset-2 ring-offset-muted' 
+                    : 'border-transparent'
+                } hover:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/70 focus:ring-offset-1 focus:ring-offset-muted transition-all duration-200`}
+                aria-label={`Ver imagen ${idx + 1}`}
+              >
+                <Image src={thumb} alt={`Thumbnail ${idx + 1}`} layout="fill" objectFit="cover" className="rounded" data-ai-hint={item.aiHint || "project thumbnail"}/>
               </button>
             ))}
           </div>
@@ -102,4 +111,3 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
     </Dialog>
   );
 }
-
