@@ -1,10 +1,11 @@
+
 "use client";
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -74,18 +75,14 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-6">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col space-y-6">
-                 <div className="flex justify-between items-center">
+                 <div className="flex items-center"> {/* Removed justify-between, default close button from SheetContent is used */}
                     <Link href="/" className="text-2xl font-bold text-primary flex items-center">
                         <Sparkles className="h-7 w-7 mr-2 text-accent" />
                         Deyconic
                     </Link>
-                    <SheetClose asChild>
-                       <Button variant="ghost" size="icon">
-                         <X className="h-6 w-6" />
-                         <span className="sr-only">Close menu</span>
-                       </Button>
-                    </SheetClose>
+                    {/* The default SheetContent includes an X close button. Removed custom one. */}
                   </div>
                   <nav className="flex flex-col space-y-3">
                     {navLinks.map((link) => (
