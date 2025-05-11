@@ -13,7 +13,7 @@ export default function FloatingActionButton() {
   return (
     <>
       <motion.div
-        className="fixed bottom-6 right-6 z-50"
+        className="fixed bottom-6 right-6 z-50" // Kept original position for this FAB
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 1 }}
@@ -22,7 +22,7 @@ export default function FloatingActionButton() {
       >
         <Button
           size="lg"
-          className="rounded-full shadow-xl hover:shadow-2xl p-4 h-16 w-16 sm:h-auto sm:w-auto sm:px-6 sm:py-3"
+          className="rounded-full shadow-xl hover:shadow-2xl p-4 h-16 w-16 sm:h-auto sm:w-auto sm:px-6 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground"
           onClick={() => setIsModalOpen(true)}
           aria-label="Digitaliza tu empresa"
         >

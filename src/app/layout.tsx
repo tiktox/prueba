@@ -5,6 +5,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
 import FloatingActionButton from '@/components/custom/floating-action-button';
+import InvestmentFab from '@/components/custom/investment-fab'; // Import the new FAB
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -67,6 +68,7 @@ export default function RootLayout({
           {children}
           <Toaster />
           <FloatingActionButton />
+          <InvestmentFab /> {/* Add the new FAB here */}
         </ThemeProvider>
       </body>
     </html>
