@@ -83,8 +83,8 @@ export default function Header() {
                   <span className="sr-only">Abrir menú</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-0">
-                <SheetHeader className="p-6 border-b border-border">
+              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-0 flex flex-col">
+                <SheetHeader className="p-6 border-b border-border flex-shrink-0">
                     <SheetTitle> {/* Required for accessibility by Radix Dialog (Sheet uses Dialog) */}
                          <Link href="/" className="text-2xl font-bold text-primary flex items-center" onClick={() => {
                            // Manually close sheet if a SheetClose is clicked within SheetTitle
@@ -103,7 +103,7 @@ export default function Header() {
                         </Link>
                     </SheetTitle>
                 </SheetHeader>
-                 <div className="p-6 flex flex-col space-y-3">
+                 <div className="flex-1 overflow-y-auto p-6">
                   <nav className="flex flex-col space-y-2">
                     {navLinks.map((link) => (
                       <SheetClose key={link.label} asChild>
