@@ -54,11 +54,11 @@ export default function Footer() {
               <DeyconicLogo 
                 lightLogoUrl={lightLogoUrl}
                 darkLogoUrl={darkLogoUrl}
-                className="mr-2"
+                className="mr-0" // Removed margin as text is gone
                 width={32}
                 height={32}
               />
-              Deyconic
+              {/* Deyconic */}
             </Link>
             <p className="text-sm leading-relaxed">
               Transformamos el futuro digital de las empresas con soluciones innovadoras y personalizadas.
@@ -139,3 +139,4 @@ export default function Footer() {
     </footer>
   );
 }
+

@@ -51,11 +51,11 @@ export default function Header() {
             <DeyconicLogo 
               lightLogoUrl={lightLogoUrl}
               darkLogoUrl={darkLogoUrl}
-              className="mr-2"
+              className="mr-0" // Removed margin as text is gone
               width={40}
               height={40}
             />
-            <span className="hidden sm:inline">Deyconic</span>
+            {/* <span className="hidden sm:inline">Deyconic</span> */}
           </Link>
 
           {/* Desktop Navigation */}
@@ -89,11 +89,11 @@ export default function Header() {
                             <DeyconicLogo 
                                 lightLogoUrl={lightLogoUrl}
                                 darkLogoUrl={darkLogoUrl}
-                                className="mr-2" 
+                                className="mr-0" 
                                 width={32} 
                                 height={32} 
                             />
-                            Deyconic
+                            {/* Deyconic */}
                         </Link>
                     </SheetTitle>
                 </SheetHeader>
@@ -121,3 +121,4 @@ export default function Header() {
     </motion.header>
   );
 }
+
