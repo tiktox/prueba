@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -22,7 +23,7 @@ export default function MissionSection() {
             className="relative h-80 md:h-96 lg:h-[450px] rounded-xl overflow-hidden shadow-2xl order-1 lg:order-none"
           >
             <Image
-              src="https://picsum.photos/seed/deyconicmission/800/600"
+              src="https://ik.imagekit.io/ajkl5a98u/cfb9cecc3d0168675a245b6dfdee8b13.jpg?updatedAt=1746988798872"
               alt="Misión de Deyconic"
               layout="fill"
               objectFit="cover"
@@ -57,3 +58,4 @@ export default function MissionSection() {
     </section>
   );
 }
+
