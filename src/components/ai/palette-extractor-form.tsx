@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,12 +15,16 @@ import { Loader2, ImageUp, Palette, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const formSchema = z.object({
-  imageFile: z.instanceof(FileList)
+  imageFile: (typeof window === 'undefined' ? z.any() : z.instanceof(FileList))
     .refine(files => files?.length > 0, "Se requiere una imagen.")
-    .refine(files => files?.[0]?.size <= 5 * 1024 * 1024, "El tamaño máximo de la imagen es 5MB.")
-    .refine(
-      files => ["image/jpeg", "image/png", "image/webp", "image/gif"].includes(files?.[0]?.type),
-      "Formato de imagen no soportado. Use JPG, PNG, WEBP o GIF."
+    .refine(files => {
+        if (typeof window === 'undefined' || !(files instanceof FileList) || files.length === 0) return true; // Skip on server or if not FileList
+        return files?.[0]?.size <= 5 * 1024 * 1024;
+      }, "El tamaño máximo de la imagen es 5MB.")
+    .refine(files => {
+        if (typeof window === 'undefined' || !(files instanceof FileList) || files.length === 0) return true; // Skip on server or if not FileList
+        return ["image/jpeg", "image/png", "image/webp", "image/gif"].includes(files?.[0]?.type);
+      }, "Formato de imagen no soportado. Use JPG, PNG, WEBP o GIF."
     ),
 });
 
@@ -38,17 +43,22 @@ export default function PaletteExtractorForm() {
 
   const imageFile = watch("imageFile");
 
-  useState(() => {
-    if (imageFile && imageFile.length > 0) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(imageFile[0]);
+  useEffect(() => {
+    if (imageFile && imageFile.length > 0 && typeof window !== "undefined") {
+      const file = imageFile[0];
+      if (file instanceof File) { // Check if it's a File object
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        setPreviewImage(null); // Reset if not a File (e.g., during SSR with z.any())
+      }
     } else {
       setPreviewImage(null);
     }
-  });
+  }, [imageFile]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
@@ -62,6 +72,14 @@ export default function PaletteExtractorForm() {
     }
 
     const file = data.imageFile[0];
+    
+    // Ensure FileReader is used only on client
+    if (typeof window === "undefined" || !(file instanceof File)) {
+        setError("Error al procesar el archivo. Inténtalo de nuevo.");
+        setIsLoading(false);
+        return;
+    }
+
     const reader = new FileReader();
 
     reader.onloadend = async () => {
@@ -98,11 +116,13 @@ export default function PaletteExtractorForm() {
   };
 
   const copyToClipboard = (color: string) => {
-    navigator.clipboard.writeText(color);
-    toast({
-      title: "Copiado",
-      description: `${color} copiado al portapapeles.`,
-    });
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+        navigator.clipboard.writeText(color);
+        toast({
+        title: "Copiado",
+        description: `${color} copiado al portapapeles.`,
+        });
+    }
   };
 
   return (
@@ -207,3 +227,4 @@ export default function PaletteExtractorForm() {
     </Card>
   );
 }
+
