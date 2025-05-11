@@ -20,7 +20,6 @@ const navLinks = [
   { href: "#eventos", label: "Eventos" },
   { href: "#preguntas", label: "Preguntas" },
   { href: "#inversion", label: "Inversión" },
-  { href: "/palette-extractor", label: "AI Palette", isExternal: true },
 ];
 
 const lightLogoUrl = "https://ik.imagekit.io/ajkl5a98u/logo_1000x1000-removebg-preview.png?updatedAt=1746469003137";

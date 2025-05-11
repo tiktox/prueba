@@ -83,7 +83,6 @@ export default function Footer() {
               <li><Link href="#servicios" className="hover:text-primary transition-colors">Servicios</Link></li>
               <li><Link href="#sobre-nosotros" className="hover:text-primary transition-colors">Sobre Nosotros</Link></li>
               <li><Link href="#portafolio" className="hover:text-primary transition-colors">Portafolio</Link></li>
-              <li><Link href="/palette-extractor" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">AI Palette Extractor</Link></li>
             </ul>
           </motion.div>
 
