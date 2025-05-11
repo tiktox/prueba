@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -10,27 +11,28 @@ export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/10 via-background to-secondary/20 dark:from-primary/5 dark:via-background dark:to-secondary/10">
-      {/* Placeholder for WebGL/Three.js dynamic background */}
-      <div className="absolute inset-0 opacity-50">
-        {/* Example: simple animated gradient or geometric pattern */}
-        <motion.div 
-          className="absolute inset-0 bg-gradient-to-tr from-accent/10 via-transparent to-primary/10"
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-          }}
-          transition={{
-            duration: 20,
-            ease: "linear",
-            repeat: Infinity,
-          }}
-          style={{ backgroundSize: "400% 400%" }}
-        />
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+          poster="https://picsum.photos/seed/hero-background/1920/1080" 
+          data-ai-hint="abstract technology"
+        >
+          <source src="https://videos.pexels.com/video-files/3209211/3209211-sd_640_360_25fps.mp4" type="video/mp4" />
+          Tu navegador no soporta videos HTML5.
+        </video>
+        {/* Overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
       
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.h1 
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6" // Changed text color to white for better contrast
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -38,7 +40,7 @@ export default function HeroSection() {
           Deyconic te brinda <span className="text-primary">Innovación</span> y <span className="text-accent">Desarrollo</span>
         </motion.h1>
         <motion.p 
-          className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10"
+          className="text-lg sm:text-xl md:text-2xl text-slate-200 max-w-3xl mx-auto mb-10" // Changed text color for better contrast
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -50,7 +52,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <Button size="lg" className="text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow group" onClick={() => setIsModalOpen(true)}>
+          <Button size="lg" className="text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow group bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => setIsModalOpen(true)}>
             Evalúa tu Empresa
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
@@ -60,3 +62,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
