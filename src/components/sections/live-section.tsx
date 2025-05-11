@@ -1,11 +1,10 @@
 
 "use client";
 
-import type { UpcomingEvent, PastEvent } from "@/types/event";
+import type { UpcomingEvent } from "@/types/event";
 import EventCard from "@/components/custom/event-card";
-import PastEventGalleryItem from "@/components/custom/past-event-gallery-item";
 import { Button } from "@/components/ui/button";
-import { CalendarCheck, GalleryThumbnails, PlusSquare, Share2 } from "lucide-react";
+import { CalendarCheck, PlusSquare, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const upcomingEventsData: UpcomingEvent[] = [
@@ -48,35 +47,6 @@ const upcomingEventsData: UpcomingEvent[] = [
     aiHint: 'software launch presentation',
     description: 'Sé el primero en conocer nuestra nueva suite de analítica de datos diseñada para transformar la toma de decisiones en tu empresa. Presentación en vivo con demos y Q&A.'
   },
-];
-
-const pastEventsData: PastEvent[] = [
-  {
-    id: '1',
-    name: 'Conferencia Anual de Innovación Deyconic 2023',
-    date: '15 Diciembre 2023',
-    summary: 'Un evento trascendental que reunió a líderes de la industria, innovadores y emprendedores para discutir el futuro de la tecnología y los negocios en la República Dominicana.',
-    achievements: '+500 asistentes, +20 ponentes internacionales, cobertura en 5 medios nacionales.',
-    image: 'https://picsum.photos/seed/conferencia-deyconic-2023/600/400',
-    aiHint: 'conference audience',
-    // videoUrl: 'https://videos.pexels.com/video-files/8571390/8571390-sd_640_360_25fps.mp4',
-  },
-  {
-    id: '2',
-    name: 'Charla: El Impacto de la Transformación Digital',
-    date: '01 Junio 2023',
-    summary: 'Una charla inspiradora y práctica sobre cómo la transformación digital está redefiniendo industrias y creando nuevas oportunidades para las empresas de todos los tamaños.',
-    image: 'https://picsum.photos/seed/charla-transformacion/600/400',
-    aiHint: 'speaker stage',
-  },
-   {
-    id: '3',
-    name: 'Demo Day: Startups Tecnológicas',
-    date: '20 Marzo 2023',
-    summary: 'Presentación de las startups más prometedoras de nuestro programa de incubación, conectando emprendedores con inversores y mentores.',
-    image: 'https://picsum.photos/seed/demo-day-startup/600/400',
-    aiHint: 'startup pitch event',
-  }
 ];
 
 
@@ -131,29 +101,8 @@ export default function LiveSection() {
                 </Button>
             </div>
         </motion.div>
-
-        {/* Galería de Eventos Pasados */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <div className="flex items-center mb-8">
-            <GalleryThumbnails className="h-8 w-8 text-primary mr-3" />
-            <h3 className="text-3xl font-semibold text-foreground">Galería de Eventos Pasados</h3>
-          </div>
-          {pastEventsData.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {pastEventsData.map((event) => (
-                <PastEventGalleryItem key={event.id} event={event} />
-              ))}
-            </div>
-          ) : (
-             <p className="text-muted-foreground text-center py-8">Aún no tenemos eventos pasados para mostrar.</p>
-          )}
-        </motion.div>
       </div>
     </section>
   );
 }
+
