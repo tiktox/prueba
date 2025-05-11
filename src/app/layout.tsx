@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
+import FloatingActionButton from '@/components/custom/floating-action-button';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -57,6 +58,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <FloatingActionButton />
         </ThemeProvider>
       </body>
     </html>
