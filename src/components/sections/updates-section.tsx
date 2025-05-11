@@ -25,7 +25,7 @@ const updatesData: UpdateItem[] = [
     title: "Prime Legacy Ring",
     date: "Próximamente",
     excerpt: "Imagina realizar tus pagos, depósitos y retiros de forma rápida y segura.",
-    image: "https://picsum.photos/seed/legacyring/600/400",
+    image: "https://ik.imagekit.io/ajkl5a98u/1.jpg?updatedAt=1746829006260",
     link: "#",
     aiHint: "futuristic payment ring"
   },
@@ -35,7 +35,7 @@ const updatesData: UpdateItem[] = [
     title: 'Únete a nuestra membresía "VIX"',
     date: "Próximamente",
     excerpt: 'Te brindamos desde eventos empresariales hasta actualizaciones festivas "VIX".',
-    image: "https://picsum.photos/seed/vixmembership/600/400",
+    image: "https://ik.imagekit.io/ajkl5a98u/VIX%20(2).png?updatedAt=1746981733097",
     link: "#", // Was vix.html
     aiHint: "exclusive membership event"
   },
