@@ -33,7 +33,7 @@ export default function AboutSection() {
             className="relative h-80 md:h-96 lg:h-[450px] rounded-xl overflow-hidden shadow-2xl"
           >
             <Image
-              src="https://picsum.photos/seed/deyconicteam/800/600"
+              src="https://ik.imagekit.io/ajkl5a98u/Dise%C3%B1o%20sin%20t%C3%ADtulo%20(1).png?updatedAt=1746979975244"
               alt="Equipo de expertos de Deyconic"
               layout="fill"
               objectFit="cover"
