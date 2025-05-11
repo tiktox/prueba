@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { DeyconicLogo } from "@/components/icons/deyconic-logo";
@@ -20,6 +20,10 @@ const navLinks = [
   { href: "#contacto", label: "Contacto" },
   { href: "/palette-extractor", label: "AI Palette", isExternal: true },
 ];
+
+const lightLogoUrl = "https://ik.imagekit.io/ajkl5a98u/logo_1000x1000-removebg-preview.png?updatedAt=1746469003137";
+const darkLogoUrl = "https://ik.imagekit.io/ajkl5a98u/1000x1000-removebg-preview2.0.png?updatedAt=1746468946560";
+
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,8 +48,14 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="text-3xl font-bold text-primary flex items-center">
-            <DeyconicLogo className="h-8 w-8 mr-2 text-accent" />
-            Deyconic
+            <DeyconicLogo 
+              lightLogoUrl={lightLogoUrl}
+              darkLogoUrl={darkLogoUrl}
+              className="mr-2"
+              width={40}
+              height={40}
+            />
+            <span className="hidden sm:inline">Deyconic</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -69,26 +79,33 @@ export default function Header() {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">Abrir menú</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-6">
-                <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
-                 <div className="flex flex-col space-y-6">
-                 <div className="flex items-center"> 
-                    <Link href="/" className="text-2xl font-bold text-primary flex items-center">
-                        <DeyconicLogo className="h-7 w-7 mr-2 text-accent" />
-                        Deyconic
-                    </Link>
-                  </div>
-                  <nav className="flex flex-col space-y-3">
+              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-0">
+                <SheetHeader className="p-6 border-b border-border">
+                    <SheetTitle className="text-left">
+                         <Link href="/" className="text-2xl font-bold text-primary flex items-center">
+                            <DeyconicLogo 
+                                lightLogoUrl={lightLogoUrl}
+                                darkLogoUrl={darkLogoUrl}
+                                className="mr-2" 
+                                width={32} 
+                                height={32} 
+                            />
+                            Deyconic
+                        </Link>
+                    </SheetTitle>
+                </SheetHeader>
+                 <div className="p-6 flex flex-col space-y-3">
+                  <nav className="flex flex-col space-y-2">
                     {navLinks.map((link) => (
                       <SheetClose key={link.label} asChild>
                         <Link
                           href={link.href}
                           target={link.isExternal ? "_blank" : undefined}
                           rel={link.isExternal ? "noopener noreferrer" : undefined}
-                          className="block py-2 px-3 rounded-md text-lg font-medium text-foreground hover:bg-muted hover:text-primary transition-colors"
+                          className="block py-2.5 px-3 rounded-md text-lg font-medium text-foreground hover:bg-muted hover:text-primary transition-colors"
                         >
                           {link.label}
                         </Link>

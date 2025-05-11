@@ -17,6 +17,9 @@ const newsletterSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
 });
 
+const lightLogoUrl = "https://ik.imagekit.io/ajkl5a98u/logo_1000x1000-removebg-preview.png?updatedAt=1746469003137";
+const darkLogoUrl = "https://ik.imagekit.io/ajkl5a98u/1000x1000-removebg-preview2.0.png?updatedAt=1746468946560";
+
 export default function Footer() {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof newsletterSchema>>({
@@ -48,7 +51,13 @@ export default function Footer() {
             className="space-y-4"
           >
             <Link href="/" className="text-3xl font-bold text-primary flex items-center">
-              <DeyconicLogo className="h-8 w-8 mr-2 text-accent" />
+              <DeyconicLogo 
+                lightLogoUrl={lightLogoUrl}
+                darkLogoUrl={darkLogoUrl}
+                className="mr-2"
+                width={32}
+                height={32}
+              />
               Deyconic
             </Link>
             <p className="text-sm leading-relaxed">
