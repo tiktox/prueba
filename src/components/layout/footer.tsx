@@ -1,7 +1,8 @@
+
 "use client";
 
 import Link from "next/link";
-import { Facebook, Linkedin, Instagram, Send, Sparkles } from "lucide-react";
+import { Facebook, Linkedin, Instagram, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -10,6 +11,7 @@ import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { DeyconicLogo } from "@/components/icons/deyconic-logo";
 
 const newsletterSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
@@ -46,7 +48,7 @@ export default function Footer() {
             className="space-y-4"
           >
             <Link href="/" className="text-3xl font-bold text-primary flex items-center">
-              <Sparkles className="h-8 w-8 mr-2 text-accent" />
+              <DeyconicLogo className="h-8 w-8 mr-2 text-accent" />
               Deyconic
             </Link>
             <p className="text-sm leading-relaxed">

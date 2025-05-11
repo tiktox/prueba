@@ -3,11 +3,12 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { DeyconicLogo } from "@/components/icons/deyconic-logo";
 
 const navLinks = [
   { href: "#hero", label: "Inicio" },
@@ -16,9 +17,6 @@ const navLinks = [
   { href: "#portafolio", label: "Portafolio" },
   { href: "#noticias", label: "Noticias" },
   { href: "#actualizaciones", label: "Actualizaciones" },
-  // { href: "#eventos", label: "Eventos" }, // Eventos might be part of updates or news
-  // { href: "#preguntas", label: "Preguntas" }, // FAQ section can be added later
-  // { href: "#soporte", label: "Soporte" }, // Contact or FAQ
   { href: "#contacto", label: "Contacto" },
   { href: "/palette-extractor", label: "AI Palette", isExternal: true },
 ];
@@ -46,7 +44,7 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="text-3xl font-bold text-primary flex items-center">
-            <Sparkles className="h-8 w-8 mr-2 text-accent" />
+            <DeyconicLogo className="h-8 w-8 mr-2 text-accent" />
             Deyconic
           </Link>
 
@@ -75,14 +73,13 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-6">
-                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                <div className="flex flex-col space-y-6">
-                 <div className="flex items-center"> {/* Removed justify-between, default close button from SheetContent is used */}
+                <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
+                 <div className="flex flex-col space-y-6">
+                 <div className="flex items-center"> 
                     <Link href="/" className="text-2xl font-bold text-primary flex items-center">
-                        <Sparkles className="h-7 w-7 mr-2 text-accent" />
+                        <DeyconicLogo className="h-7 w-7 mr-2 text-accent" />
                         Deyconic
                     </Link>
-                    {/* The default SheetContent includes an X close button. Removed custom one. */}
                   </div>
                   <nav className="flex flex-col space-y-3">
                     {navLinks.map((link) => (
