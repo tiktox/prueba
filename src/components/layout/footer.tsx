@@ -64,9 +64,9 @@ export default function Footer() {
               Transformamos el futuro digital de las empresas con soluciones innovadoras y personalizadas.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" aria-label="Facebook" className="hover:text-primary transition-colors"><Facebook size={20} /></Link>
-              <Link href="https://www.linkedin.com/in/dominican-hubvix-178372355/" aria-label="LinkedIn" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer"><Linkedin size={20} /></Link>
-              <Link href="https://www.instagram.com/hubvix?igsh=bG4wd2pzYjdicW52&utm_source=qr" aria-label="Instagram" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer"><Instagram size={20} /></Link>
+              <Link href="https://www.facebook.com/deyconic" aria-label="Facebook" className="hover:text-primary transition-colors"><Facebook size={20} /></Link>
+              <Link href="https://www.linkedin.com/in/deyconic/" aria-label="LinkedIn" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer"><Linkedin size={20} /></Link>
+              <Link href="https://www.instagram.com/deyconic/#" aria-label="Instagram" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer"><Instagram size={20} /></Link>
             </div>
           </motion.div>
 
