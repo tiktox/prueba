@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -24,7 +25,7 @@ const updatesData: UpdateItem[] = [
     tag: "Nuevo Proyecto",
     title: "Prime Legacy Ring",
     date: "Próximamente",
-    excerpt: "Imagina realizar tus pagos, depósitos y retiros de forma rápida y segura.",
+    excerpt: "Imagina realizar tus pagos, depósitos y retiros de forma rápida y segura, todo desde la comodidad de tu mano con un anillo inteligente.",
     image: "https://ik.imagekit.io/ajkl5a98u/1.jpg?updatedAt=1746829006260",
     link: "#",
     aiHint: "futuristic payment ring"
@@ -34,9 +35,9 @@ const updatesData: UpdateItem[] = [
     tag: "Eventos",
     title: 'Únete a nuestra membresía "VIX"',
     date: "Próximamente",
-    excerpt: 'Te brindamos desde eventos empresariales hasta actualizaciones festivas "VIX".',
+    excerpt: 'Te brindamos desde eventos empresariales exclusivos hasta actualizaciones festivas y contenido premium con nuestra membresía "VIX".',
     image: "https://ik.imagekit.io/ajkl5a98u/VIX%20(2).png?updatedAt=1746981733097",
-    link: "#", // Was vix.html
+    link: "#", 
     aiHint: "exclusive membership event"
   },
   {
@@ -44,7 +45,7 @@ const updatesData: UpdateItem[] = [
     tag: "Proyecto Futuro",
     title: "Deyconic Office",
     date: "Próximamente",
-    excerpt: "Oficina principal, Santiago de los Caballeros para brindar un servicio de calidad.",
+    excerpt: "Nuestra futura oficina principal en Santiago de los Caballeros, diseñada para fomentar la innovación y brindar un servicio de calidad superior.",
     image: "https://ik.imagekit.io/ajkl5a98u/deyconic%20office.png?updatedAt=1746982459226",
     link: "#",
     aiHint: "modern office building"
@@ -65,7 +66,7 @@ export default function UpdatesSection() {
   useEffect(() => {
     const timer = setTimeout(() => {
       nextSlide();
-    }, 7000); // Auto-scroll every 7 seconds
+    }, 7000); 
     return () => clearTimeout(timer);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
@@ -91,7 +92,7 @@ export default function UpdatesSection() {
           </p>
         </motion.div>
 
-        <div className="relative max-w-3xl mx-auto min-h-[34rem]"> {/* Added min-h-[34rem] (544px) */}
+        <div className="relative max-w-3xl mx-auto min-h-[34rem]"> 
           <AnimatePresence mode="wait">
             <motion.div
               key={currentUpdate.id}
@@ -99,10 +100,10 @@ export default function UpdatesSection() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="w-full absolute inset-0" // Added absolute positioning for smooth transition within fixed height container
+              className="w-full absolute inset-0" 
             >
-              <Card className="overflow-hidden shadow-xl rounded-xl flex flex-col md:flex-row h-full"> {/* Ensure card takes full height of motion.div */}
-                <div className="md:w-1/2 relative h-64 md:h-full"> {/* md:h-full to use available space */}
+              <Card className="overflow-hidden shadow-xl rounded-xl flex flex-col md:flex-row h-full"> 
+                <div className="md:w-1/2 relative h-64 md:h-full"> 
                   <Image
                     src={currentUpdate.image}
                     alt={currentUpdate.title}
@@ -115,19 +116,19 @@ export default function UpdatesSection() {
                      {currentUpdate.tag}
                    </div>
                 </div>
-                <div className="md:w-1/2 flex flex-col justify-between"> {/* justify-between to distribute space */}
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-foreground">{currentUpdate.title}</CardTitle>
+                <div className="md:w-1/2 flex flex-col justify-between p-1"> {/* Reduced padding for content part */}
+                  <CardHeader className="pt-4 pb-2 md:pt-6 md:pb-3"> {/* Adjusted padding */}
+                    <CardTitle className="text-xl md:text-2xl font-bold text-foreground">{currentUpdate.title}</CardTitle>
                   </CardHeader>
-                  <CardContent className="flex-grow">
-                    <div className="flex items-center text-sm text-muted-foreground mb-3">
+                  <CardContent className="flex-grow overflow-y-auto py-2 md:py-3"> {/* Added overflow-y-auto & adjusted padding */}
+                    <div className="flex items-center text-sm text-muted-foreground mb-2 md:mb-3">
                       <CalendarDays className="h-4 w-4 mr-2" /> {currentUpdate.date}
                     </div>
-                    <p className="text-muted-foreground leading-relaxed line-clamp-4 sm:line-clamp-5"> {/* line-clamp to manage text overflow */}
+                    <p className="text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4 md:line-clamp-5 text-sm md:text-base"> 
                         {currentUpdate.excerpt}
                     </p>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className="pt-2 pb-4 md:pt-3 md:pb-6"> {/* Adjusted padding */}
                     <Button asChild variant="outline" className="group">
                       <a href={currentUpdate.link} target="_blank" rel="noopener noreferrer">
                         Leer más
@@ -144,19 +145,19 @@ export default function UpdatesSection() {
             variant="outline"
             size="icon"
             onClick={prevSlide}
-            className="absolute top-1/2 -left-4 md:-left-12 transform -translate-y-1/2 rounded-full shadow-md bg-background hover:bg-muted z-10"
+            className="absolute top-1/2 -left-4 md:-left-12 transform -translate-y-1/2 rounded-full shadow-md bg-background hover:bg-muted z-10 h-10 w-10 md:h-12 md:w-12"
             aria-label="Anterior Actualización"
           >
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
           </Button>
           <Button
             variant="outline"
             size="icon"
             onClick={nextSlide}
-            className="absolute top-1/2 -right-4 md:-right-12 transform -translate-y-1/2 rounded-full shadow-md bg-background hover:bg-muted z-10"
+            className="absolute top-1/2 -right-4 md:-right-12 transform -translate-y-1/2 rounded-full shadow-md bg-background hover:bg-muted z-10 h-10 w-10 md:h-12 md:w-12"
             aria-label="Siguiente Actualización"
           >
-            <ChevronRight className="h-6 w-6" />
+            <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
           </Button>
         </div>
         
@@ -175,3 +176,4 @@ export default function UpdatesSection() {
     </section>
   );
 }
+
