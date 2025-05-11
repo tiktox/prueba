@@ -16,7 +16,7 @@ export default function VisionModal({ isOpen, onClose }: VisionModalProps) {
       <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden shadow-2xl rounded-lg">
         <div className="relative h-48 md:h-64 w-full">
           <Image
-            src="https://picsum.photos/seed/deyconicvision/1200/400"
+            src="https://ik.imagekit.io/ajkl5a98u/fffffffff.jpg?updatedAt=1746201245099"
             alt="Banner Visión Deyconic"
             layout="fill"
             objectFit="cover"
