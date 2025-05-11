@@ -12,12 +12,14 @@ import { DeyconicLogo } from "@/components/icons/deyconic-logo";
 
 const navLinks = [
   { href: "#hero", label: "Inicio" },
-  { href: "#servicios", label: "Servicios" },
   { href: "#sobre-nosotros", label: "Nosotros" },
+  { href: "#servicios", label: "Servicios" },
   { href: "#portafolio", label: "Portafolio" },
   { href: "#noticias", label: "Noticias" },
   { href: "#actualizaciones", label: "Actualizaciones" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "#eventos", label: "Eventos" },
+  { href: "#preguntas", label: "Preguntas" },
+  { href: "#inversion", label: "Inversión" },
   { href: "/palette-extractor", label: "AI Palette", isExternal: true },
 ];
 
@@ -51,17 +53,16 @@ export default function Header() {
             <DeyconicLogo 
               lightLogoUrl={lightLogoUrl}
               darkLogoUrl={darkLogoUrl}
-              className="mr-0" // Removed margin as text is gone
+              className="mr-0" 
               width={40}
               height={40}
             />
-            {/* <span className="hidden sm:inline">Deyconic</span> */}
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-2">
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navLinks.map((link) => (
-              <Button key={link.label} variant="ghost" asChild className="text-foreground hover:text-primary hover:bg-primary/10">
+              <Button key={link.label} variant="ghost" asChild className="text-foreground hover:text-primary hover:bg-primary/10 text-sm px-3 py-2">
                 {link.isExternal ? (
                   <Link href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</Link>
                 ) : (
@@ -84,8 +85,14 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-0">
                 <SheetHeader className="p-6 border-b border-border">
-                    <SheetTitle className="text-left">
-                         <Link href="/" className="text-2xl font-bold text-primary flex items-center">
+                    <SheetTitle> {/* Required for accessibility by Radix Dialog (Sheet uses Dialog) */}
+                         <Link href="/" className="text-2xl font-bold text-primary flex items-center" onClick={() => {
+                           // Manually close sheet if a SheetClose is clicked within SheetTitle
+                           const closeButton = document.querySelector('[data-radix-dialog-close]');
+                           if (closeButton instanceof HTMLElement) {
+                            closeButton.click();
+                           }
+                         }}>
                             <DeyconicLogo 
                                 lightLogoUrl={lightLogoUrl}
                                 darkLogoUrl={darkLogoUrl}
@@ -93,7 +100,6 @@ export default function Header() {
                                 width={32} 
                                 height={32} 
                             />
-                            {/* Deyconic */}
                         </Link>
                     </SheetTitle>
                 </SheetHeader>
