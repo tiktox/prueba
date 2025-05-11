@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -20,8 +21,8 @@ const portfolioData: PortfolioItem[] = [
     mainImage: "https://ik.imagekit.io/ajkl5a98u/clinica%20dental%201.jpg?updatedAt=1746197438549",
     thumbnails: [
         "https://ik.imagekit.io/ajkl5a98u/clinica%20dental%201.jpg?updatedAt=1746197438549",
-        "https://picsum.photos/seed/dental2/400/300",
-        "https://picsum.photos/seed/dental3/400/300",
+        "https://ik.imagekit.io/ajkl5a98u/clinica%20dental%202.jpg?updatedAt=1746197442037",
+        "https://ik.imagekit.io/ajkl5a98u/clinica%20dental%203.jpg?updatedAt=1746197442723",
     ],
     projectLink: "#",
     aiHint: "dental clinic website"
@@ -37,8 +38,8 @@ const portfolioData: PortfolioItem[] = [
     mainImage: "https://ik.imagekit.io/ajkl5a98u/mr%20grilled%201.jpg?updatedAt=1746197443058",
     thumbnails: [
         "https://ik.imagekit.io/ajkl5a98u/mr%20grilled%201.jpg?updatedAt=1746197443058",
-        "https://picsum.photos/seed/hotel2/400/300",
-        "https://picsum.photos/seed/hotel3/400/300",
+        "https://ik.imagekit.io/ajkl5a98u/mr%20grilled%202.jpg?updatedAt=1746197442745",
+        "https://ik.imagekit.io/ajkl5a98u/mr%20grilled%203.jpg?updatedAt=1746197443843",
     ],
     aiHint: "hotel management software"
   },
@@ -53,8 +54,8 @@ const portfolioData: PortfolioItem[] = [
     mainImage: "https://ik.imagekit.io/ajkl5a98u/deyconic%20store.jpg?updatedAt=1746197440975",
     thumbnails: [
         "https://ik.imagekit.io/ajkl5a98u/deyconic%20store.jpg?updatedAt=1746197440975",
-        "https://picsum.photos/seed/store2/400/300",
-        "https://picsum.photos/seed/store3/400/300",
+        "https://ik.imagekit.io/ajkl5a98u/deyconic%20store%202.jpg?updatedAt=1746197440948",
+        "https://ik.imagekit.io/ajkl5a98u/STORE%204.jpg?updatedAt=1746316452904",
     ],
     aiHint: "e-commerce marketplace"
   },
@@ -78,7 +79,10 @@ export default function PortfolioSection() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedItem(null);
+    // Delay setting selectedItem to null to allow exit animation to complete
+    setTimeout(() => {
+      setSelectedItem(null);
+    }, 300); 
   };
 
   return (
@@ -111,9 +115,9 @@ export default function PortfolioSection() {
               key={filter}
               variant={activeFilter === filter ? "default" : "outline"}
               onClick={() => setActiveFilter(filter)}
-              className="rounded-full px-4 sm:px-6 py-2 text-sm sm:text-base transition-all duration-300 flex items-center"
+              className="rounded-full px-4 sm:px-6 py-2 text-sm sm:text-base transition-all duration-300 flex items-center group"
             >
-              {activeFilter === filter && <Check className="mr-2 h-4 w-4" />}
+              {activeFilter === filter && <Check className="mr-2 h-4 w-4 animate-pulse" />}
               {filter}
             </Button>
           ))}
@@ -121,7 +125,7 @@ export default function PortfolioSection() {
 
         <motion.div 
           layout 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           <AnimatePresence>
             {filteredItems.map((item, index) => (
@@ -131,31 +135,34 @@ export default function PortfolioSection() {
                 initial={{ opacity: 0, scale: 0.8, y: 50 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: -50 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20, delay: index * 0.05 }}
                 onClick={() => handleItemClick(item)}
                 className="cursor-pointer"
               >
-                <Card className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl hover:border-primary">
-                  <div className="relative h-60 w-full overflow-hidden">
+                <Card className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl hover:border-primary border-2 border-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 focus-within:ring-offset-secondary">
+                  <div className="relative h-52 sm:h-60 w-full overflow-hidden">
                     <Image
                       src={item.mainImage}
                       alt={item.title}
                       layout="fill"
                       objectFit="cover"
-                      className="transform group-hover:scale-105 transition-transform duration-500"
+                      className="transform group-hover:scale-105 transition-transform duration-500 ease-in-out"
                       data-ai-hint={item.aiHint || "project image"}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <Eye className="h-12 w-12 text-white/90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <Eye className="h-12 w-12 text-white/90 transform group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                     <div className="absolute top-3 right-3 bg-primary/80 backdrop-blur-sm text-primary-foreground px-2.5 py-1 rounded-full text-xs font-semibold shadow-md">
+                        {item.category}
                     </div>
                   </div>
-                  <CardContent className="p-6 flex-grow flex flex-col bg-background">
-                    <div>
-                      <h3 className="text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
-                      <p className="text-sm text-primary font-medium mb-3">{item.category}</p>
-                      <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{item.description}</p>
+                  <CardContent className="p-5 flex-grow flex flex-col bg-background">
+                    <div className="flex-grow">
+                      <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-3 h-8 sm:h-10">{item.description}</p>
                     </div>
-                    <Button variant="outline" size="sm" className="mt-auto self-start group/button hover:bg-primary hover:text-primary-foreground border-primary text-primary">
+                    <Button variant="outline" size="sm" className="mt-auto self-start group/button hover:bg-primary hover:text-primary-foreground border-primary text-primary w-full sm:w-auto justify-center">
                       Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform" />
                     </Button>
                   </CardContent>

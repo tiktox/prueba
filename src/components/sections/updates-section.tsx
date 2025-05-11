@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -45,7 +46,7 @@ const updatesData: UpdateItem[] = [
     title: "Deyconic Office",
     date: "Próximamente",
     excerpt: "Oficina principal, Santiago de los Caballeros para brindar un servicio de calidad.",
-    image: "https://picsum.photos/seed/deyconicoffice/600/400",
+    image: "https://ik.imagekit.io/ajkl5a98u/deyconic%20office.png?updatedAt=1746982459226",
     link: "#",
     aiHint: "modern office building"
   },
@@ -67,7 +68,7 @@ export default function UpdatesSection() {
       nextSlide();
     }, 5000); // Auto-scroll every 5 seconds
     return () => clearTimeout(timer);
-  }, [currentIndex]);
+  }, [currentIndex, nextSlide]);
 
 
   const currentUpdate = updatesData[currentIndex];
