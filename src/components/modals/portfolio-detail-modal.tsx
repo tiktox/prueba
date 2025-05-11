@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
@@ -164,7 +163,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
           </div>
         )}
 
-        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-grow overflow-y-auto">
+        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-grow overflow-y-auto min-h-0">
           <DialogHeader>
             <DialogTitle className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground leading-tight">{item.title}</DialogTitle>
           </DialogHeader>
@@ -201,4 +200,3 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
     </Dialog>
   );
 }
-

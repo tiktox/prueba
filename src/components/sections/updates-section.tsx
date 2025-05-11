@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -68,7 +67,8 @@ export default function UpdatesSection() {
       nextSlide();
     }, 5000); // Auto-scroll every 5 seconds
     return () => clearTimeout(timer);
-  }, [currentIndex, nextSlide]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
 
 
   const currentUpdate = updatesData[currentIndex];
@@ -101,14 +101,15 @@ export default function UpdatesSection() {
               transition={{ duration: 0.5 }}
               className="w-full"
             >
-              <Card className="overflow-hidden shadow-xl rounded-xl flex flex-col md:flex-row">
-                <div className="md:w-1/2 relative h-64 md:h-auto min-h-[300px]">
+              <Card className="overflow-hidden shadow-xl rounded-xl flex flex-col md:flex-row md:min-h-[320px]">
+                <div className="md:w-1/2 relative h-64 md:h-[320px]">
                   <Image
                     src={currentUpdate.image}
                     alt={currentUpdate.title}
                     layout="fill"
                     objectFit="cover"
                     data-ai-hint={currentUpdate.aiHint}
+                    priority={currentIndex === updatesData.findIndex(u => u.id === currentUpdate.id)} // Add priority to current image
                   />
                    <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold shadow-md">
                      {currentUpdate.tag}

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -160,7 +159,7 @@ export default function PortfolioSection() {
                   <CardContent className="p-5 flex-grow flex flex-col bg-background">
                     <div className="flex-grow">
                       <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-3 h-8 sm:h-10">{item.description}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3 mb-3">{item.description}</p>
                     </div>
                     <Button variant="outline" size="sm" className="mt-auto self-start group/button hover:bg-primary hover:text-primary-foreground border-primary text-primary w-full sm:w-auto justify-center">
                       Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform" />
