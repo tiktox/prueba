@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, CalendarDays, ExternalLink } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface UpdateItem {
   id: string;
@@ -77,11 +76,7 @@ export default function UpdatesSection() {
   return (
     <section id="actualizaciones" className="py-20 bg-secondary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+        <div
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-foreground tracking-tight mb-4">
@@ -90,20 +85,15 @@ export default function UpdatesSection() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Mantente al día con las últimas novedades y avances de Deyconic.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="relative max-w-3xl mx-auto min-h-[34rem]"> 
-          <AnimatePresence mode="wait">
-            <motion.div
+        <div className="relative max-w-3xl mx-auto min-h-[32rem] sm:min-h-[28rem] md:min-h-[26rem] lg:min-h-[24rem] xl:min-h-[22rem]"> 
+            <div
               key={currentUpdate.id}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
               className="w-full absolute inset-0" 
             >
               <Card className="overflow-hidden shadow-xl rounded-xl flex flex-col md:flex-row h-full"> 
-                <div className="md:w-1/2 relative h-64 md:h-full"> 
+                <div className="md:w-1/2 relative h-64 md:h-auto"> 
                   <Image
                     src={currentUpdate.image}
                     alt={currentUpdate.title}
@@ -116,19 +106,19 @@ export default function UpdatesSection() {
                      {currentUpdate.tag}
                    </div>
                 </div>
-                <div className="md:w-1/2 flex flex-col justify-between p-1"> {/* Reduced padding for content part */}
-                  <CardHeader className="pt-4 pb-2 md:pt-6 md:pb-3"> {/* Adjusted padding */}
+                <div className="md:w-1/2 flex flex-col justify-between">
+                  <CardHeader>
                     <CardTitle className="text-xl md:text-2xl font-bold text-foreground">{currentUpdate.title}</CardTitle>
                   </CardHeader>
-                  <CardContent className="flex-grow overflow-y-auto py-2 md:py-3"> {/* Added overflow-y-auto & adjusted padding */}
-                    <div className="flex items-center text-sm text-muted-foreground mb-2 md:mb-3">
+                  <CardContent className="flex-grow"> 
+                    <div className="flex items-center text-sm text-muted-foreground mb-3">
                       <CalendarDays className="h-4 w-4 mr-2" /> {currentUpdate.date}
                     </div>
-                    <p className="text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4 md:line-clamp-5 text-sm md:text-base"> 
+                    <p className="text-muted-foreground leading-relaxed line-clamp-3 sm:line-clamp-4 text-sm md:text-base"> 
                         {currentUpdate.excerpt}
                     </p>
                   </CardContent>
-                  <CardFooter className="pt-2 pb-4 md:pt-3 md:pb-6"> {/* Adjusted padding */}
+                  <CardFooter> 
                     <Button asChild variant="outline" className="group">
                       <a href={currentUpdate.link} target="_blank" rel="noopener noreferrer">
                         Leer más
@@ -138,8 +128,7 @@ export default function UpdatesSection() {
                   </CardFooter>
                 </div>
               </Card>
-            </motion.div>
-          </AnimatePresence>
+            </div>
 
           <Button
             variant="outline"
@@ -176,4 +165,3 @@ export default function UpdatesSection() {
     </section>
   );
 }
-
