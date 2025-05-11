@@ -15,11 +15,11 @@ const navLinks = [
   { href: "#sobre-nosotros", label: "Nosotros" },
   { href: "#servicios", label: "Servicios" },
   { href: "#portafolio", label: "Portafolio" },
+  { href: "#deyconic-live", label: "Eventos" }, // Updated href
   { href: "#noticias", label: "Noticias" },
   { href: "#actualizaciones", label: "Actualizaciones" },
-  { href: "#eventos", label: "Eventos" },
-  { href: "#preguntas", label: "Preguntas" },
-  { href: "#inversion", label: "Inversión" },
+  // { href: "#preguntas", label: "Preguntas" }, // Temporarily removed for space, can be re-added
+  // { href: "#inversion", label: "Inversión" }, // Temporarily removed for space
 ];
 
 const lightLogoUrl = "https://ik.imagekit.io/ajkl5a98u/logo_1000x1000-removebg-preview.png?updatedAt=1746469003137";
@@ -59,14 +59,10 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1">
             {navLinks.map((link) => (
-              <Button key={link.label} variant="ghost" asChild className="text-foreground hover:text-primary hover:bg-primary/10 text-sm px-3 py-2">
-                {link.isExternal ? (
-                  <Link href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</Link>
-                ) : (
-                  <Link href={link.href}>{link.label}</Link>
-                )}
+              <Button key={link.label} variant="ghost" asChild className="text-foreground hover:text-primary hover:bg-primary/10 text-xs px-2.5 py-2 xl:text-sm xl:px-3">
+                <Link href={link.href}>{link.label}</Link>
               </Button>
             ))}
             <ThemeToggle />
@@ -83,10 +79,9 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background p-0 flex flex-col">
-                <SheetHeader className="p-6 border-b border-border flex-shrink-0">
-                    <SheetTitle> {/* Required for accessibility by Radix Dialog (Sheet uses Dialog) */}
+                 <SheetHeader className="p-6 border-b border-border flex-shrink-0">
+                    <SheetTitle> 
                          <Link href="/" className="text-2xl font-bold text-primary flex items-center" onClick={() => {
-                           // Manually close sheet if a SheetClose is clicked within SheetTitle
                            const closeButton = document.querySelector('[data-radix-dialog-close]');
                            if (closeButton instanceof HTMLElement) {
                             closeButton.click();
@@ -108,14 +103,19 @@ export default function Header() {
                       <SheetClose key={link.label} asChild>
                         <Link
                           href={link.href}
-                          target={link.isExternal ? "_blank" : undefined}
-                          rel={link.isExternal ? "noopener noreferrer" : undefined}
                           className="block py-2.5 px-3 rounded-md text-lg font-medium text-foreground hover:bg-muted hover:text-primary transition-colors"
                         >
                           {link.label}
                         </Link>
                       </SheetClose>
                     ))}
+                    {/* Re-add other links for mobile if desired */}
+                     <SheetClose asChild>
+                        <Link href="#preguntas" className="block py-2.5 px-3 rounded-md text-lg font-medium text-foreground hover:bg-muted hover:text-primary transition-colors">Preguntas</Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link href="#inversion" className="block py-2.5 px-3 rounded-md text-lg font-medium text-foreground hover:bg-muted hover:text-primary transition-colors">Inversión</Link>
+                      </SheetClose>
                   </nav>
                 </div>
               </SheetContent>
