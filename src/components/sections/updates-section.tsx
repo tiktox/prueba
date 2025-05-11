@@ -65,7 +65,7 @@ export default function UpdatesSection() {
   useEffect(() => {
     const timer = setTimeout(() => {
       nextSlide();
-    }, 5000); // Auto-scroll every 5 seconds
+    }, 7000); // Auto-scroll every 7 seconds
     return () => clearTimeout(timer);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
@@ -91,31 +91,31 @@ export default function UpdatesSection() {
           </p>
         </motion.div>
 
-        <div className="relative max-w-3xl mx-auto">
+        <div className="relative max-w-3xl mx-auto min-h-[34rem]"> {/* Added min-h-[34rem] (544px) */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentUpdate.id}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-              className="w-full"
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="w-full absolute inset-0" // Added absolute positioning for smooth transition within fixed height container
             >
-              <Card className="overflow-hidden shadow-xl rounded-xl flex flex-col md:flex-row md:min-h-[320px]">
-                <div className="md:w-1/2 relative h-64 md:h-[320px]">
+              <Card className="overflow-hidden shadow-xl rounded-xl flex flex-col md:flex-row h-full"> {/* Ensure card takes full height of motion.div */}
+                <div className="md:w-1/2 relative h-64 md:h-full"> {/* md:h-full to use available space */}
                   <Image
                     src={currentUpdate.image}
                     alt={currentUpdate.title}
                     layout="fill"
                     objectFit="cover"
                     data-ai-hint={currentUpdate.aiHint}
-                    priority={currentIndex === updatesData.findIndex(u => u.id === currentUpdate.id)} // Add priority to current image
+                    priority={currentIndex === updatesData.findIndex(u => u.id === currentUpdate.id)} 
                   />
                    <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold shadow-md">
                      {currentUpdate.tag}
                    </div>
                 </div>
-                <div className="md:w-1/2 flex flex-col">
+                <div className="md:w-1/2 flex flex-col justify-between"> {/* justify-between to distribute space */}
                   <CardHeader>
                     <CardTitle className="text-2xl font-bold text-foreground">{currentUpdate.title}</CardTitle>
                   </CardHeader>
@@ -123,7 +123,9 @@ export default function UpdatesSection() {
                     <div className="flex items-center text-sm text-muted-foreground mb-3">
                       <CalendarDays className="h-4 w-4 mr-2" /> {currentUpdate.date}
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">{currentUpdate.excerpt}</p>
+                    <p className="text-muted-foreground leading-relaxed line-clamp-4 sm:line-clamp-5"> {/* line-clamp to manage text overflow */}
+                        {currentUpdate.excerpt}
+                    </p>
                   </CardContent>
                   <CardFooter>
                     <Button asChild variant="outline" className="group">
