@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
@@ -34,7 +35,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
 
   useEffect(() => {
     if (item) {
-      setAnimationDirection(0); // Reset direction for a new item, so it fades in
+      setAnimationDirection(0); 
       setCurrentImage(item.mainImage);
       setCurrentImageIndex(0); 
     }
@@ -42,7 +43,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
 
   if (!item) return null;
 
-  const allImages = [item.mainImage, ...item.thumbnails.filter(thumb => thumb !== item.mainImage && thumb)]; // Ensure thumbnails are valid
+  const allImages = [item.mainImage, ...item.thumbnails.filter(thumb => thumb !== item.mainImage && thumb)]; 
 
   const changeImageWithDirection = (newIndex: number, direction: number) => {
     setAnimationDirection(direction);
@@ -82,7 +83,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction === 0 ? 0 : direction > 0 ? -50 : 50, // Note: for exit, direction is of the new image, so old image goes opposite
+      x: direction === 0 ? 0 : direction > 0 ? -50 : 50, 
       opacity: 0,
     }),
   };
@@ -100,7 +101,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
         <div className="relative h-56 sm:h-64 md:h-80 lg:h-96 w-full flex-shrink-0 group overflow-hidden">
           <AnimatePresence initial={false} custom={animationDirection} mode="wait">
             <motion.div
-              key={currentImage} // Using currentImage string as key
+              key={currentImage} 
               custom={animationDirection}
               variants={imageVariants}
               initial="enter"
@@ -116,7 +117,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
                 objectFit="cover"
                 data-ai-hint={item.aiHint || "project image"}
                 className="rounded-t-lg" 
-                priority={true} // Prioritize loading of current image
+                priority={true} 
               />
             </motion.div>
           </AnimatePresence>
@@ -145,13 +146,13 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
         </div>
         
         {allImages.length > 1 && (
-          <div className="flex p-2 sm:p-3 bg-muted space-x-1.5 sm:space-x-2 overflow-x-auto flex-shrink-0 scrollbar-thin scrollbar-thumb-primary/50 scrollbar-track-transparent">
+          <div className="flex p-2 sm:p-3 bg-muted space-x-1.5 sm:space-x-2 overflow-x-auto flex-shrink-0">
             {allImages.map((thumb, idx) => (
               <button 
                 key={idx} 
                 onClick={() => handleThumbnailClick(thumb, idx)}
                 className={`flex-shrink-0 w-16 h-12 sm:w-20 sm:h-14 relative rounded-md overflow-hidden border-2 ${
-                  currentImageIndex === idx // Use currentImageIndex for active state
+                  currentImageIndex === idx 
                     ? 'border-primary ring-2 ring-primary ring-offset-2 ring-offset-muted' 
                     : 'border-transparent hover:border-primary/70'
                 } focus:outline-none focus:ring-2 focus:ring-primary/70 focus:ring-offset-1 focus:ring-offset-muted transition-all duration-200 ease-in-out`}
@@ -163,7 +164,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
           </div>
         )}
 
-        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-grow overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground leading-tight">{item.title}</DialogTitle>
           </DialogHeader>
@@ -200,3 +201,4 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
     </Dialog>
   );
 }
+
