@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 const lightLogoUrl = "https://ik.imagekit.io/ajkl5a98u/logo_1000x1000-removebg-preview.png?updatedAt=1746469003137";
 
 export const metadata: Metadata = {
-  title: 'Deyconic - Innovación y Transformación Digital en República Dominicana',
+  title: 'Deyconic',
   description: 'Deyconic es una institución que ofrece servicios digitales y fisicos a empresas que no tienen presencia en redes sociales o no cuentan con una plataforma profesional que los posicione en los motores de busqueda, nuestro objetivo es lograr el impulso digital para pequeñas y grandes empresas y mejorar la interacción empresarial con el cliente. Nuestro equipo de expertos fusiona creatividad y tecnología para potenciar el crecimiento de tu negocio, ya sea en el ámbito digital o físico, alcanzando el máximo nivel de desarrollo empresarial para tu organización.',
   keywords: ['Deyconic', 'innovación digital', 'startups RD', 'transformación digital', 'gestión de proyectos RD', 'empresas que desarrollan páginas web', 'empresa de diseño web', 'gestión empresarial', 'crear páginas web'],
   authors: [{ name: 'Deyconic' }],
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     apple: lightLogoUrl,
   },
   openGraph: {
-    title: 'Deyconic - Desarrollo web y gestión empresarial',
+    title: 'Deyconic',
     description: 'Empresa líder en desarrollo web y gestión empresarial.',
     url: 'https://deyconic.vercel.app/', // Replace with actual production URL
     images: [
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Deyconic - Desarrollo Web',
+    title: 'Deyconic',
     description: 'Empresa líder en desarrollo web y gestión empresarial.',
     images: ['https://deyconic.vercel.app/og-image.jpg'], // Replace with actual URL for Twitter image
   },
