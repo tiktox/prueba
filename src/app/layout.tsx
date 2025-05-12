@@ -90,7 +90,7 @@ export default function RootLayout({
           </main>
           <Toaster />
           <FloatingActionButton />
-          <InvestmentFabWrapper />
+          <InvestmentFabWrapper /> 
         </AuthProvider>
       </body>
     </html>
