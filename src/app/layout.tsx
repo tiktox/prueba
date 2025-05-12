@@ -5,7 +5,13 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
 import FloatingActionButton from '@/components/custom/floating-action-button';
-import InvestmentFab from '@/components/custom/InvestmentFab'; 
+// import InvestmentFab from '@/components/custom/InvestmentFab'; // Removed direct import
+import dynamic from 'next/dynamic';
+
+const InvestmentFabClientOnly = dynamic(
+  () => import('@/components/custom/investment-fab'),
+  { ssr: false }
+);
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -68,7 +74,7 @@ export default function RootLayout({
           {children}
           <Toaster />
           <FloatingActionButton />
-          <InvestmentFab /> 
+          <InvestmentFabClientOnly /> 
         </ThemeProvider>
       </body>
     </html>
