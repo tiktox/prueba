@@ -8,7 +8,7 @@ import InvestmentModal from "@/components/modals/investment-modal";
 import { motion, useAnimation, type Variants } from "framer-motion";
 
 /**
- * @file InversionButton.tsx
+ * @file InvestmentFab.tsx
  * @description A floating action button for "Proyectos de Inversión" with complex animations.
  *
  * Core Functionality:
@@ -65,7 +65,7 @@ interface ParticlePosition {
   r: number;
 }
 
-export default function InversionButton() {
+export default function InvestmentFab() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [currentHaloColor, setCurrentHaloColor] = useState("var(--primary)");
@@ -134,12 +134,13 @@ export default function InversionButton() {
     };
     scheduleNextPulse();
     return () => clearTimeout(pulseTimeoutId);
-  }, [prefersReducedMotion, haloControls, shadowControls, currentHaloColor]); // Added currentHaloColor to dependencies
+  }, [prefersReducedMotion, haloControls, shadowControls, currentHaloColor]);
 
   const handleFabClick = async () => {
+    if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(10);
+
     if (prefersReducedMotion) {
       setIsModalOpen(true);
-      if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(10);
       return;
     }
 
@@ -159,22 +160,20 @@ export default function InversionButton() {
     });
 
     setIsModalOpen(true);
-    if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(10);
     
     // Reset particles after a delay slightly longer than their collapse animation
-    setTimeout(() => {
-        particleControls.start(i => ({
-            opacity: 0,
-            scale: 0,
-            // Reset cx, cy to their original positions if they should reappear on hover
-            // For now, just ensure they are hidden
-            cx: particlePositions[i]?.cx || "50%", 
-            cy: particlePositions[i]?.cy || "50%",
-            transition: { duration: 0 } 
-        }));
-    }, (SHOCKWAVE_DURATION * 0.7 + PARTICLE_COUNT * 0.02 + 0.1) * 1000);
-
-
+     // Check particlePositions length before accessing
+     if (particlePositions.length > 0) {
+        setTimeout(() => {
+            particleControls.start(i => ({
+                opacity: 0,
+                scale: 0,
+                cx: particlePositions[i]?.cx || "50%", 
+                cy: particlePositions[i]?.cy || "50%",
+                transition: { duration: 0 } 
+            }));
+        }, (SHOCKWAVE_DURATION * 0.7 + PARTICLE_COUNT * 0.02 + 0.1) * 1000);
+    }
   };
   
   const fabVariants: Variants = {
@@ -183,60 +182,70 @@ export default function InversionButton() {
   };
   
   const handleHoverStart = () => {
-    if (prefersReducedMotion || particlePositions.length === 0) {
-        if (!prefersReducedMotion) fabControls.start({ scale: 1.1 }); // Basic scale for non-reduced even if particles fail
+    if (prefersReducedMotion) {
+        fabControls.start({ scale: 1.05 }); // Tailwind handles this, but for consistency
         return;
     }
     fabControls.start({ scale: 1.1, transition: { duration: 0.2 } });
     haloControls.stop(); 
     haloControls.start({ 
       scale: [1, 1.4, 1], opacity: [0, 0.8, 0],
-      transition: { duration: 1.5 / 1.2, ease: "easeInOut" }, // 20% faster
+      backgroundColor: currentHaloColor, // Use current halo color
+      transition: { duration: 1.5 / 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: (Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN) / 1.2 }, 
     });
     shadowControls.start({
       opacity: [0.4, 0.7, 0.4], scale: [1, 1.15, 1],
-      transition: { duration: 1.5 / 1.2, ease: "easeInOut" },
+      transition: { duration: 1.5 / 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: (Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN) / 1.2 },
     });
-
-    particleControls.start(i => ({
-      cx: particlePositions[i].cx, cy: particlePositions[i].cy,
-      opacity: [0, 0.7, 0.3, 0.7, 0], // Pulse opacity
-      scale: [0.5, 1, 0.8, 1, 0.5], // Pulse scale
-      transition: { 
-          duration: 1.2 + (Math.random() * 0.5), // Slightly variable duration for each particle
-          delay: i * 0.05, 
-          repeat: Infinity, 
-          repeatDelay: 0.3 + (Math.random() * 0.4), // Variable repeat delay
-          ease: "easeInOut" 
-      }
-    }));
+    
+    if (particlePositions.length > 0) { // Check before starting particle animation
+        particleControls.start(i => ({
+        cx: particlePositions[i].cx, cy: particlePositions[i].cy,
+        opacity: [0, 0.7, 0.3, 0.7, 0], 
+        scale: [0.5, 1, 0.8, 1, 0.5], 
+        transition: { 
+            duration: 1.2 + (Math.random() * 0.5), 
+            delay: i * 0.05, 
+            repeat: Infinity, 
+            repeatDelay: 0.3 + (Math.random() * 0.4),
+            ease: "easeInOut" 
+        }
+        }));
+    }
   };
 
   const handleHoverEnd = () => {
     if (prefersReducedMotion) {
-        fabControls.start({ scale: 1 }); // Reset scale for non-reduced
+        fabControls.start({ scale: 1 });
         return;
     }
     fabControls.start({ scale: 1 }); 
     
-    // Restart idle pulse
-    if (!prefersReducedMotion) { // Ensure this only runs if not reduced motion
-        const duration = Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN;
-        // Ensure haloControls are only restarted if not in reduced motion
+    haloControls.stop();
+    shadowControls.stop();
+    particleControls.stop(); // Stop particle animations explicitly
+
+    // Restart idle pulse for halo and shadow
+    const duration = Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN;
+    setTimeout(() => {
+        setCurrentHaloColor(prev => prev === "var(--primary)" ? NEON_MINT_COLOR : "var(--primary)");
         haloControls.start({
             scale: [1, 1.3, 1], opacity: [0, 0.7, 0],
-            transition: { duration: 1.5, ease: "easeInOut", delay: duration / 3 }, 
+            backgroundColor: currentHaloColor, // Ensures it uses the toggled color
+            transition: { duration: 1.5, ease: "easeInOut" },
         });
         shadowControls.start({
            opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1],
-           transition: { duration: 1.5, ease: "easeInOut", delay: duration / 3 },
+           transition: { duration: 1.5, ease: "easeInOut" },
         });
-    }
+    }, duration * 1000 / 3); // Start slightly delayed to avoid immediate re-pulse
+
+    // Ensure particles are hidden
     particleControls.start({ opacity: 0, scale: 0, transition: {duration: 0.3} });
   };
   
   const hoverFocusProps = prefersReducedMotion 
-    ? {} // CSS handles hover for reduced motion via Tailwind classes
+    ? {} 
     : {
         onHoverStart: handleHoverStart,
         onHoverEnd: handleHoverEnd,
@@ -255,7 +264,7 @@ export default function InversionButton() {
         className="fixed bottom-[calc(theme(spacing.6)_+_4.5rem)] right-6 z-50 sm:bottom-[calc(theme(spacing.6)_+_4rem)]"
         variants={fabVariants}
         initial="initial"
-        animate={fabControls} // Use fabControls for initial animation too
+        animate={fabControls} 
         {...hoverFocusProps}
         whileTap={prefersReducedMotion ? { scale: 0.95 } : { scale: 0.9 }}
       >
@@ -267,7 +276,7 @@ export default function InversionButton() {
         <motion.div
             style={{ ...haloBaseStyle, zIndex: -2 }}
             animate={shadowControls}
-            className="bg-black/30 blur-lg" // Ensure this is not too strong
+            className="bg-black/30 blur-lg" 
         />
         
         {!prefersReducedMotion && particlePositions.length > 0 && (
