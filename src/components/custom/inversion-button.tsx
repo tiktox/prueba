@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Briefcase, Info } from "lucide-react";
 import { motion, useAnimation, AnimatePresence, type Variants } from "framer-motion";
+// Removed InvestmentModal import as it's handled by InvestmentFabWrapper
 
 const LONG_PRESS_DURATION = 2000; // 2 seconds
 const ELECTRIC_BLUE = "hsl(var(--primary))"; // Using HSL variable from globals.css
@@ -200,11 +201,11 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
       haloControls.start({ scale: 1.1, opacity: 0.3, transition: { duration: 0.3 } });
 
     } else { // Reduced motion progress
-        let currentProgress = 0;
+        let currentProgressValue = 0; // Renamed from currentProgress to avoid conflict with outer scope
         const interval = setInterval(() => {
-            currentProgress += (100 / (LONG_PRESS_DURATION / 50));
-            setPressProgress(Math.min(currentProgress, 100) / 100);
-            if (currentProgress >= 100) clearInterval(interval);
+            currentProgressValue += (100 / (LONG_PRESS_DURATION / 50));
+            setPressProgress(Math.min(currentProgressValue, 100) / 100);
+            if (currentProgressValue >= 100) clearInterval(interval);
         }, 50);
         // Store interval ref to clear it in cancelPress or on completion
         if (pressTimerRef.current) clearTimeout(pressTimerRef.current); // Clear previous timer if any for progress
@@ -239,7 +240,7 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
     if (!prefersReducedMotion) pressTimerRef.current = longPressCompletionTimer;
 
 
-  }, [prefersReducedMotion, progressRingControls, onOpenModal, fabControls, shockwaveControls, individualParticleControls, particleGroupControls, haloControls]);
+  }, [prefersReducedMotion, progressRingControls, onOpenModal, fabControls, shockwaveControls, individualParticleControls, particleGroupControls, haloControls, lightningControls]);
 
 
   const cancelPress = useCallback(() => {
@@ -252,8 +253,8 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
     
     // Only show tooltip if it was a short press, not just a click that didn't start the timer.
     // pressProgress is 0-1 for non-reduced, 0-100 for reduced. Normalize for check.
-    const currentNormalizedProgress = prefersReducedMotion ? pressProgress : pressProgress * (LONG_PRESS_DURATION / 1000) / (LONG_PRESS_DURATION / 1000);
-    if (isPressingRef.current && currentNormalizedProgress > 0 && currentNormalizedProgress < 0.95) { // Check if it was a real press attempt, not too close to full press
+    const currentNormalizedProgress = prefersReducedMotion ? pressProgress : pressProgress * (LONG_PRESS_DURATION / 1000) / (LONG_PRESS_DURATION / 1000); // This normalization seems off, should be simpler
+    if (isPressingRef.current && pressProgress > 0 && pressProgress < 0.95) { // Simplified check based on 0-1 scale
         setShowHelpTooltip(true);
         helpTooltipTimerRef.current = setTimeout(() => setShowHelpTooltip(false), 3000);
     }
@@ -475,7 +476,8 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
           </TooltipContent>
         </Tooltip>
       </motion.div>
-      <InvestmentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* InvestmentModal is now handled by InvestmentFabWrapper */}
     </TooltipProvider>
   );
 }
+
