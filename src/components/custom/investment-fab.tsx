@@ -41,11 +41,17 @@ const BOUNCE_DURATION = 0.3; // seconds
 const PARTICLE_COUNT = 5;
 const CUBIC_BEZIER_EASING = [0.55, 0, 0.1, 1]; // For shockwave & particle collapse
 
+interface ParticlePosition {
+  cx: string;
+  cy: string;
+  r: number;
+}
 
 export default function InvestmentFab() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [currentHaloColor, setCurrentHaloColor] = useState("var(--primary)"); // Electric Blue
+  const [particlePositions, setParticlePositions] = useState<ParticlePosition[]>([]);
   
   const fabControls = useAnimation();
   const particleControls = useAnimation();
@@ -53,13 +59,26 @@ export default function InvestmentFab() {
   const shadowControls = useAnimation();
   const shockwaveControls = useAnimation();
 
-  // Detect prefers-reduced-motion
+  // Detect prefers-reduced-motion and initialize particle positions
   useEffect(() => {
     if (typeof window !== "undefined") {
       const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       setPrefersReducedMotion(mediaQuery.matches);
       const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
       mediaQuery.addEventListener("change", handleChange);
+
+      // Generate particle positions on client side
+      const positions = Array.from({ length: PARTICLE_COUNT }).map((_, i) => {
+        const angle = (i / PARTICLE_COUNT) * 2 * Math.PI;
+        const radius = 30; // px, distance from button center for SVG viewbox
+        return {
+          cx: `${50 + (radius / 2.2) * Math.cos(angle)}%`,
+          cy: `${50 + (radius / 2.2) * Math.sin(angle)}%`,
+          r: Math.random() * 1.5 + 1, // random radius 1-2.5px
+        };
+      });
+      setParticlePositions(positions);
+      
       return () => mediaQuery.removeEventListener("change", handleChange);
     }
   }, []);
@@ -141,22 +160,8 @@ export default function InvestmentFab() {
     animate: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 260, damping: 20, delay: 1.2 } },
   };
   
-  // Initial positions for SVG particles - memoized
-  const particlePositions = useMemo(() => 
-    Array.from({ length: PARTICLE_COUNT }).map((_, i) => {
-      const angle = (i / PARTICLE_COUNT) * 2 * Math.PI;
-      const radius = 30; // px, distance from button center for SVG viewbox
-      return {
-        cx: `${50 + (radius / 2.2) * Math.cos(angle)}%`,
-        cy: `${50 + (radius / 2.2) * Math.sin(angle)}%`,
-        r: Math.random() * 1.5 + 1, // random radius 1-2.5px
-      };
-    }), 
-  []);
-
-
   const handleHoverStart = () => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || particlePositions.length === 0) return;
     fabControls.start({ scale: 1.1, transition: { duration: 0.2 } });
     haloControls.stop(); // Stop current idle pulse
     haloControls.start({
@@ -228,7 +233,7 @@ export default function InvestmentFab() {
         />
         
         {/* Particles SVG (for non-reduced motion) */}
-        {!prefersReducedMotion && (
+        {!prefersReducedMotion && particlePositions.length > 0 && (
             <svg
                 viewBox="0 0 64 64" // Centered viewbox around the button
                 style={{
