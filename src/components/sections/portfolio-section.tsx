@@ -23,7 +23,7 @@ const portfolioData: PortfolioItem[] = [
         "https://ik.imagekit.io/ajkl5a98u/clinica%20dental%202.jpg?updatedAt=1746197442037",
         "https://ik.imagekit.io/ajkl5a98u/clinica%20dental%203.jpg?updatedAt=1746197442723",
     ],
-    projectLink: "#",
+    projectLink: "https://clinica-dental01.web.app/",
     aiHint: "dental clinic website"
   },
   {
@@ -40,6 +40,7 @@ const portfolioData: PortfolioItem[] = [
         "https://ik.imagekit.io/ajkl5a98u/mr%20grilled%202.jpg?updatedAt=1746197442745",
         "https://ik.imagekit.io/ajkl5a98u/mr%20grilled%203.jpg?updatedAt=1746197443843",
     ],
+    projectLink: "https://tiktox.github.io/msgrilled/",
     aiHint: "hotel management software"
   },
   {
@@ -56,6 +57,7 @@ const portfolioData: PortfolioItem[] = [
         "https://ik.imagekit.io/ajkl5a98u/deyconic%20store%202.jpg?updatedAt=1746197440948",
         "https://ik.imagekit.io/ajkl5a98u/STORE%204.jpg?updatedAt=1746316452904",
     ],
+    projectLink: "https://tiktox.github.io/xmchat/",
     aiHint: "e-commerce marketplace"
   },
 ];
@@ -135,10 +137,15 @@ export default function PortfolioSection() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: -50 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20, delay: index * 0.05 }}
-                onClick={() => handleItemClick(item)}
+                
                 className="cursor-pointer"
               >
-                <Card className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl hover:border-primary border-2 border-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 focus-within:ring-offset-secondary">
+                <Card 
+                  onClick={() => handleItemClick(item)}
+                  className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl hover:border-primary border-2 border-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 focus-within:ring-offset-secondary"
+                  tabIndex={0} // Make card focusable
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleItemClick(item); }}
+                >
                   <div className="relative h-52 sm:h-60 w-full overflow-hidden">
                     <Image
                       src={item.mainImage}
@@ -161,8 +168,13 @@ export default function PortfolioSection() {
                       <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
                       <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3 mb-3">{item.description}</p>
                     </div>
-                    <Button variant="outline" size="sm" className="mt-auto self-start group/button hover:bg-primary hover:text-primary-foreground border-primary text-primary w-full sm:w-auto justify-center">
-                      Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform" />
+                     <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-auto self-start group/button hover:bg-primary hover:text-primary-foreground border-primary text-primary w-full sm:w-auto justify-center"
+                        onClick={(e) => { e.stopPropagation(); handleItemClick(item); }} // Prevent card click if button is clicked
+                    >
+                        Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform" />
                     </Button>
                   </CardContent>
                 </Card>
