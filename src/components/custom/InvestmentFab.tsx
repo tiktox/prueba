@@ -70,6 +70,7 @@ export default function InvestmentFab() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [currentHaloColor, setCurrentHaloColor] = useState("var(--primary)");
   const [particlePositions, setParticlePositions] = useState<ParticlePosition[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
   
   const fabControls = useAnimation();
   const particleControls = useAnimation();
@@ -78,6 +79,8 @@ export default function InvestmentFab() {
   const shockwaveControls = useAnimation();
 
   useEffect(() => {
+    setIsMounted(true); // Ensure client-side only rendering for dynamic parts
+
     if (typeof window !== "undefined") {
       const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       setPrefersReducedMotion(mediaQuery.matches);
@@ -100,10 +103,12 @@ export default function InvestmentFab() {
   }, []);
 
   useEffect(() => {
+    if (!isMounted) return; // Don't run animations server-side or before mount
+
     if (prefersReducedMotion) {
       haloControls.start({
-        scale: [1, 1.03, 1], opacity: [0.3, 0.5, 0.3], // More subtle pulse
-        backgroundColor: "var(--primary)", // Fixed color
+        scale: [1, 1.03, 1], opacity: [0.3, 0.5, 0.3],
+        backgroundColor: "var(--primary)",
         transition: { repeat: Infinity, duration: 3, ease: "easeInOut" },
       });
       shadowControls.start({
@@ -134,12 +139,12 @@ export default function InvestmentFab() {
     };
     scheduleNextPulse();
     return () => clearTimeout(pulseTimeoutId);
-  }, [prefersReducedMotion, haloControls, shadowControls, currentHaloColor]);
+  }, [isMounted, prefersReducedMotion, haloControls, shadowControls, currentHaloColor]);
 
   const handleFabClick = async () => {
     if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(10);
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || !isMounted) {
       setIsModalOpen(true);
       return;
     }
@@ -161,8 +166,6 @@ export default function InvestmentFab() {
 
     setIsModalOpen(true);
     
-    // Reset particles after a delay slightly longer than their collapse animation
-     // Check particlePositions length before accessing
      if (particlePositions.length > 0) {
         setTimeout(() => {
             particleControls.start(i => ({
@@ -176,21 +179,21 @@ export default function InvestmentFab() {
     }
   };
   
-  const fabVariants: Variants = {
+  const fabVariants: Variants = useMemo(() => ({ // useMemo to avoid re-creation
     initial: { scale: 0, opacity: 0 },
     animate: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 260, damping: 20, delay: 1.2 } },
-  };
+  }), []);
   
   const handleHoverStart = () => {
-    if (prefersReducedMotion) {
-        fabControls.start({ scale: 1.05 }); // Tailwind handles this, but for consistency
+    if (prefersReducedMotion || !isMounted) {
+        fabControls.start({ scale: 1.05 });
         return;
     }
     fabControls.start({ scale: 1.1, transition: { duration: 0.2 } });
     haloControls.stop(); 
     haloControls.start({ 
       scale: [1, 1.4, 1], opacity: [0, 0.8, 0],
-      backgroundColor: currentHaloColor, // Use current halo color
+      backgroundColor: currentHaloColor,
       transition: { duration: 1.5 / 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: (Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN) / 1.2 }, 
     });
     shadowControls.start({
@@ -198,7 +201,7 @@ export default function InvestmentFab() {
       transition: { duration: 1.5 / 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: (Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN) / 1.2 },
     });
     
-    if (particlePositions.length > 0) { // Check before starting particle animation
+    if (particlePositions.length > 0) {
         particleControls.start(i => ({
         cx: particlePositions[i].cx, cy: particlePositions[i].cy,
         opacity: [0, 0.7, 0.3, 0.7, 0], 
@@ -215,7 +218,7 @@ export default function InvestmentFab() {
   };
 
   const handleHoverEnd = () => {
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || !isMounted) {
         fabControls.start({ scale: 1 });
         return;
     }
@@ -223,28 +226,28 @@ export default function InvestmentFab() {
     
     haloControls.stop();
     shadowControls.stop();
-    particleControls.stop(); // Stop particle animations explicitly
+    particleControls.stop();
 
-    // Restart idle pulse for halo and shadow
     const duration = Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN;
     setTimeout(() => {
-        setCurrentHaloColor(prev => prev === "var(--primary)" ? NEON_MINT_COLOR : "var(--primary)");
-        haloControls.start({
-            scale: [1, 1.3, 1], opacity: [0, 0.7, 0],
-            backgroundColor: currentHaloColor, // Ensures it uses the toggled color
+        if (!prefersReducedMotion) { // Check again in case it changed
+            setCurrentHaloColor(prev => prev === "var(--primary)" ? NEON_MINT_COLOR : "var(--primary)");
+            haloControls.start({
+                scale: [1, 1.3, 1], opacity: [0, 0.7, 0],
+                backgroundColor: currentHaloColor, 
+                transition: { duration: 1.5, ease: "easeInOut" },
+            });
+            shadowControls.start({
+            opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1],
             transition: { duration: 1.5, ease: "easeInOut" },
-        });
-        shadowControls.start({
-           opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1],
-           transition: { duration: 1.5, ease: "easeInOut" },
-        });
-    }, duration * 1000 / 3); // Start slightly delayed to avoid immediate re-pulse
+            });
+        }
+    }, duration * 1000 / 3);
 
-    // Ensure particles are hidden
     particleControls.start({ opacity: 0, scale: 0, transition: {duration: 0.3} });
   };
   
-  const hoverFocusProps = prefersReducedMotion 
+  const hoverFocusProps = (prefersReducedMotion || !isMounted)
     ? {} 
     : {
         onHoverStart: handleHoverStart,
@@ -257,6 +260,10 @@ export default function InvestmentFab() {
     position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
     borderRadius: "50%", pointerEvents: "none",
   };
+
+  if (!isMounted) { // Render nothing or a placeholder on server / before mount for FAB itself
+    return null; 
+  }
 
   return (
     <>
@@ -279,7 +286,7 @@ export default function InvestmentFab() {
             className="bg-black/30 blur-lg" 
         />
         
-        {!prefersReducedMotion && particlePositions.length > 0 && (
+        {isMounted && !prefersReducedMotion && particlePositions.length > 0 && (
             <svg
                 viewBox="0 0 64 64" 
                 style={{
@@ -305,7 +312,7 @@ export default function InvestmentFab() {
             </svg>
         )}
         
-        {!prefersReducedMotion && (
+        {isMounted && !prefersReducedMotion && (
           <motion.div
               style={{
                   position: 'absolute', top: '50%', left: '50%',
@@ -340,3 +347,4 @@ export default function InvestmentFab() {
     </>
   );
 }
+
