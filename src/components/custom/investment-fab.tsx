@@ -5,7 +5,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Briefcase } from "lucide-react";
 import InvestmentModal from "@/components/modals/investment-modal";
-import { motion, useAnimation, Variants } from "framer-motion";
+import { motion, useAnimation, type Variants } from "framer-motion";
 
 /**
  * @file InvestmentFab.tsx
