@@ -20,8 +20,8 @@ import { motion, useAnimation, type Variants } from "framer-motion";
  * - Hover/Focus: Pulse accelerates by 20%, halo intensifies. Orbital particles appear and pulse gently.
  * - Click:
  *   1. Orbital particles collapse towards the center.
- *   2. A shockwave emanates from the button.
- *   3. Button briefly "bounces" (scales 0 -> 1.1 -> 1).
+ *   2. A shockwave emanates from the button (cubic-bezier: 0.55, 0, 0.1, 1).
+ *   3. Button briefly "bounces" (scales 1 -> 0.8 -> 1.1 -> 1).
  *   4. Modal opens with haptic feedback on mobile.
  * - Reduced Motion: Degrades to a simple light pulse and scale change on hover.
  *
@@ -30,7 +30,7 @@ import { motion, useAnimation, type Variants } from "framer-motion";
  * - `SHOCKWAVE_DURATION`: Controls shockwave animation duration on click.
  * - `BOUNCE_DURATION`: Controls button bounce animation on click.
  * - `PARTICLE_COUNT`: Number of orbital particles.
- * - Colors are derived from CSS variables (e.g., --primary, --accent) or defined directly.
+ * - Colors: Electric Blue (var(--primary)), Neon Mint (#2EF2AF). Orbital wave: var(--primary) to transparent.
  */
 
 // --- Animation Constants ---
@@ -40,6 +40,7 @@ const SHOCKWAVE_DURATION = 0.6; // seconds
 const BOUNCE_DURATION = 0.3; // seconds
 const PARTICLE_COUNT = 5;
 const CUBIC_BEZIER_EASING = [0.55, 0, 0.1, 1]; // For shockwave & particle collapse
+const NEON_MINT_COLOR = "#2EF2AF"; // Neon Mint color for halo
 
 interface ParticlePosition {
   cx: string;
@@ -61,6 +62,7 @@ export default function InvestmentFab() {
 
   // Detect prefers-reduced-motion and initialize particle positions
   useEffect(() => {
+    //This check ensures that window-dependent code runs only on the client-side.
     if (typeof window !== "undefined") {
       const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       setPrefersReducedMotion(mediaQuery.matches);
@@ -104,12 +106,12 @@ export default function InvestmentFab() {
     const scheduleNextPulse = () => {
       const duration = Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN;
       pulseTimeoutId = setTimeout(() => {
-        setCurrentHaloColor(prev => prev === "var(--primary)" ? "hsl(var(--accent))" : "var(--primary)"); // Neon Mint is --accent
+        setCurrentHaloColor(prev => prev === "var(--primary)" ? NEON_MINT_COLOR : "var(--primary)");
         haloControls.start({
           scale: [1, 1.3, 1], opacity: [0, 0.7, 0],
           transition: { duration: 1.5, ease: "easeInOut" },
         });
-        shadowControls.start({
+        shadowControls.start({ // Dynamic shadow "breathes" with halo
           opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1],
           transition: { duration: 1.5, ease: "easeInOut" },
         });
@@ -140,9 +142,9 @@ export default function InvestmentFab() {
       transition: { duration: SHOCKWAVE_DURATION, ease: CUBIC_BEZIER_EASING },
     });
     
-    // 3. Button bounce
+    // 3. Button bounce (scales 1 -> 0.8 -> 1.1 -> 1)
     await fabControls.start({
-      scale: [1, 0.8, 1.1, 1], // Compresses then overshoots
+      scale: [1, 0.8, 1.1, 1], 
       transition: { duration: BOUNCE_DURATION, times: [0, 0.4, 0.7, 1], ease: "circOut" },
     });
 
@@ -164,14 +166,15 @@ export default function InvestmentFab() {
     if (prefersReducedMotion || particlePositions.length === 0) return;
     fabControls.start({ scale: 1.1, transition: { duration: 0.2 } });
     haloControls.stop(); // Stop current idle pulse
-    haloControls.start({
-      scale: [1, 1.4, 1], opacity: [0, 0.8, 0],
+    haloControls.start({ // Pulse accelerates by 20%, halo intensifies
+      scale: [1, 1.4, 1], opacity: [0, 0.8, 0], // Intensified opacity
       transition: { duration: 1.5 / 1.2, ease: "easeInOut" }, // 20% faster
     });
     shadowControls.start({
-      opacity: [0.4, 0.7, 0.4], scale: [1, 1.15, 1],
+      opacity: [0.4, 0.7, 0.4], scale: [1, 1.15, 1], // Intensified shadow
       transition: { duration: 1.5 / 1.2, ease: "easeInOut" },
     });
+    // Orbital particles appear and pulse gently
     particleControls.start(i => ({
       cx: particlePositions[i].cx, cy: particlePositions[i].cy,
       opacity: [0, 0.7, 0], scale: [0.5, 1, 0.5],
@@ -181,27 +184,27 @@ export default function InvestmentFab() {
 
   const handleHoverEnd = () => {
     if (prefersReducedMotion) return;
-    fabControls.start({ scale: 1 }); // Return to base scale
-    // Restart idle pulse after a delay
+    fabControls.start({ scale: 1 }); 
+    // Restart idle pulse after a delay to avoid immediate re-trigger if hover is quickly reapplied
     const duration = Math.random() * (HALO_PULSE_DURATION_MAX - HALO_PULSE_DURATION_MIN) + HALO_PULSE_DURATION_MIN;
     haloControls.start({
       scale: [1, 1.3, 1], opacity: [0, 0.7, 0],
-      transition: { duration: 1.5, ease: "easeInOut", delay: duration / 2 },
+      transition: { duration: 1.5, ease: "easeInOut", delay: duration / 3 }, // Short delay before restart
     });
     shadowControls.start({
        opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1],
-       transition: { duration: 1.5, ease: "easeInOut", delay: duration / 2 },
+       transition: { duration: 1.5, ease: "easeInOut", delay: duration / 3 },
     });
     particleControls.start({ opacity: 0, scale: 0, transition: {duration: 0.3} });
   };
   
   const hoverFocusProps = prefersReducedMotion 
-    ? { whileHover: { scale: 1.05 }, whileFocus: { scale: 1.05 } }
+    ? { whileHover: { scale: 1.05 }, whileFocus: { scale: 1.05 } } // CSS fallback for reduced motion
     : {
         onHoverStart: handleHoverStart,
         onHoverEnd: handleHoverEnd,
-        onFocus: handleHoverStart, // Re-using hover logic for focus
-        onBlur: handleHoverEnd,    // Re-using hover logic for blur
+        onFocus: handleHoverStart, 
+        onBlur: handleHoverEnd,    
       };
   
   const haloBaseStyle: React.CSSProperties = {
@@ -219,40 +222,40 @@ export default function InvestmentFab() {
         animate={fabControls}
         {...hoverFocusProps}
       >
-        {/* Halo (dynamic color) */}
+        {/* Halo (dynamic color: Electric Blue / Neon Mint) */}
         <motion.div
             style={{ ...haloBaseStyle, backgroundColor: currentHaloColor, zIndex: -1 }}
             animate={haloControls}
-            className="opacity-0" // Initial opacity, animation controls it
+            className="opacity-0" 
         />
         {/* Breathing Shadow */}
         <motion.div
             style={{ ...haloBaseStyle, zIndex: -2 }}
             animate={shadowControls}
-            className="bg-black/30 blur-lg" // Enhanced blur for shadow
+            className="bg-black/30 blur-lg"
         />
         
-        {/* Particles SVG (for non-reduced motion) */}
+        {/* Particles SVG (orbital wave: deep blue -> transparent) */}
         {!prefersReducedMotion && particlePositions.length > 0 && (
             <svg
-                viewBox="0 0 64 64" // Centered viewbox around the button
+                viewBox="0 0 64 64" 
                 style={{
                     position: 'absolute', top: '-50%', left: '-50%',
-                    width: '200%', height: '200%', // Make SVG area larger than button
-                    pointerEvents: 'none', zIndex: 0, // Above halo/shadow, below button text/icon
+                    width: '200%', height: '200%', 
+                    pointerEvents: 'none', zIndex: 0, 
                     overflow: 'visible'
                 }}
             >
                 {particlePositions.map((pos, i) => (
                 <motion.circle
                     key={i}
-                    custom={i} // For stagger delay in animations
+                    custom={i} 
                     cx={pos.cx}
                     cy={pos.cy}
                     r={pos.r}
-                    fill="hsl(var(--primary))" // Use primary color for particles
+                    fill="hsl(var(--primary))" // Deep blue (Electric Blue)
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={particleControls}
+                    animate={particleControls} // Fades to opacity 0 for transparent effect
                 />
                 ))}
             </svg>
@@ -280,7 +283,7 @@ export default function InvestmentFab() {
           variant="default"
           className="relative rounded-full shadow-xl p-4 h-16 w-16 sm:h-auto sm:w-auto sm:px-6 sm:py-3 bg-primary hover:bg-primary/90 text-primary-foreground overflow-hidden"
           // Simple CSS scale on hover for reduced motion (Framer Motion also handles this if active)
-          style={prefersReducedMotion ? { transition: 'transform 0.2s ease-in-out' } : {}} 
+          style={prefersReducedMotion ? { transition: 'transform 0.2s ease-in-out', transform: 'scale(1)' } : {}} 
           onClick={handleFabClick}
           aria-label="Proyectos de Inversión"
         >
