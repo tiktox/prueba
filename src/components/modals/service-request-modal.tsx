@@ -70,8 +70,8 @@ export default function ServiceRequestModal({
       }
       onClose();
     }}>
-      <DialogContent className="sm:max-w-lg w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col">
-        <DialogHeader className="p-6 pb-4 border-b border-border">
+      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[85vh]">
+        <DialogHeader className="p-6 pb-4 border-b border-border flex-shrink-0">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl sm:text-2xl font-semibold text-foreground flex items-center">
               <ShoppingBag className="h-6 w-6 mr-3 text-primary" />
@@ -88,12 +88,14 @@ export default function ServiceRequestModal({
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="flex-grow max-h-[60vh] p-6">
+        <ScrollArea className="flex-grow p-6 min-h-0" style={{ maxHeight: 'calc(85vh - 10rem)' }}> 
+          {/* Adjusted max-height to better fit content within modal constraints */}
+          {/* min-h-0 is important for flex-grow to work correctly with scrollarea in some flex contexts */}
           <RadioGroup value={selectedService ?? undefined} onValueChange={setSelectedService} className="space-y-3">
             {servicesData.map((service) => (
               <div key={service.title} className="flex items-center space-x-3 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value={service.title} id={service.title.replace(/\s+/g, '-')} />
-                <Label htmlFor={service.title.replace(/\s+/g, '-')} className="text-base font-medium cursor-pointer flex-1">
+                <Label htmlFor={service.title.replace(/\s+/g, '-')} className="text-base font-normal cursor-pointer flex-1">
                   {service.title}
                 </Label>
               </div>
@@ -101,7 +103,7 @@ export default function ServiceRequestModal({
           </RadioGroup>
         </ScrollArea>
         
-        <DialogFooter className="p-6 pt-4 border-t border-border">
+        <DialogFooter className="p-6 pt-4 border-t border-border flex-shrink-0">
           <Button onClick={onClose} variant="outline">
             Cancelar
           </Button>
