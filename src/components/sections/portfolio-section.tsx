@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -137,7 +138,6 @@ export default function PortfolioSection() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: -50 }}
                 transition={{ type: "spring", stiffness: 260, damping: 20, delay: index * 0.05 }}
-                
                 className="cursor-pointer"
               >
                 <Card 
@@ -187,3 +187,4 @@ export default function PortfolioSection() {
     </section>
   );
 }
+
