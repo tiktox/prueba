@@ -141,9 +141,9 @@ export default function PortfolioSection() {
                 className="cursor-pointer"
               >
                 <Card 
-                  onClick={() => handleItemClick(item)}
-                  className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl hover:border-primary border-2 border-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 focus-within:ring-offset-secondary"
-                  tabIndex={0} // Make card focusable
+                  onClick={() => handleItemClick(item)} 
+                  className="overflow-hidden group h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl hover:border-primary border-2 border-transparent focus-within:border-primary focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 focus-within:ring-offset-secondary min-h-[380px] sm:min-h-[400px]"
+                  tabIndex={0} 
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleItemClick(item); }}
                 >
                   <div className="relative h-52 sm:h-60 w-full overflow-hidden">
@@ -172,7 +172,7 @@ export default function PortfolioSection() {
                         variant="outline" 
                         size="sm" 
                         className="mt-auto self-start group/button hover:bg-primary hover:text-primary-foreground border-primary text-primary w-full sm:w-auto justify-center"
-                        onClick={(e) => { e.stopPropagation(); handleItemClick(item); }} // Prevent card click if button is clicked
+                        onClick={(e) => { e.stopPropagation(); handleItemClick(item); }} 
                     >
                         Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform" />
                     </Button>

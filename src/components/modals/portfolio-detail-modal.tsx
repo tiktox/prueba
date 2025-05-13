@@ -90,14 +90,14 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-[95vw] sm:w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[90vh] sm:max-h-[85vh]">
-        <DialogClose asChild className="absolute top-3 right-3 z-20">
+      <DialogContent className="max-w-4xl w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[90vh] sm:max-h-[85vh]">
+        <DialogClose asChild className="absolute top-4 right-4 z-20"> {/* Adjusted spacing */}
             <Button variant="ghost" size="icon" onClick={onClose} className="bg-background/60 hover:bg-background/90 rounded-full h-8 w-8 sm:h-9 sm:w-9">
               <X className="h-4 w-4 sm:h-5 sm:h-5" />
             </Button>
         </DialogClose>
         
-        <div className="relative h-56 sm:h-64 md:h-80 lg:h-96 w-full flex-shrink-0 group overflow-hidden">
+        <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 w-full flex-shrink-0 group overflow-hidden"> {/* Reduced image heights */}
           <AnimatePresence initial={false} custom={animationDirection} mode="wait">
             <motion.div
               key={currentImage} 
