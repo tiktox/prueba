@@ -1,11 +1,12 @@
 "use client";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; // Keep for other buttons if any, or remove if not used elsewhere in this file
 import Image from "next/image";
 import { CalendarDays, Tag, User, X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils"; // Import cn for class utility
 
 export interface PortfolioItem {
   id: string;
@@ -34,15 +35,15 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
 
   useEffect(() => {
     if (item) {
-      setAnimationDirection(0); 
+      setAnimationDirection(0);
       setCurrentImage(item.mainImage);
-      setCurrentImageIndex(0); 
+      setCurrentImageIndex(0);
     }
   }, [item]);
 
   if (!item) return null;
 
-  const allImages = [item.mainImage, ...item.thumbnails.filter(thumb => thumb !== item.mainImage && thumb)]; 
+  const allImages = [item.mainImage, ...item.thumbnails.filter(thumb => thumb !== item.mainImage && thumb)];
 
   const changeImageWithDirection = (newIndex: number, direction: number) => {
     setAnimationDirection(direction);
@@ -82,7 +83,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction === 0 ? 0 : direction > 0 ? -50 : 50, 
+      x: direction === 0 ? 0 : direction > 0 ? -50 : 50,
       opacity: 0,
     }),
   };
@@ -91,16 +92,28 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[90vh] sm:max-h-[85vh]">
-        <DialogClose asChild className="absolute top-4 right-4 z-20"> {/* Adjusted spacing */}
-            <Button variant="ghost" size="icon" onClick={onClose} className="bg-background/60 hover:bg-background/90 rounded-full h-8 w-8 sm:h-9 sm:w-9">
-              <X className="h-4 w-4 sm:h-5 sm:h-5" />
-            </Button>
+        {/* Removed asChild and styled DialogClose directly */}
+        <DialogClose
+          onClick={onClose}
+          className={cn(
+            // Base button-like styles from shadcn/ui Button
+            "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+            // Approximating ghost variant styles
+            "hover:bg-accent hover:text-accent-foreground",
+            // Custom styles from the original Button
+            "absolute top-4 right-4 z-20 p-0", // p-0 for icon button
+            "bg-background/60 hover:bg-background/90",
+            "rounded-full h-8 w-8 sm:h-9 sm:w-9"
+          )}
+          aria-label="Cerrar"
+        >
+          <X className="h-4 w-4 sm:h-5 sm:h-5" />
         </DialogClose>
-        
+
         <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 w-full flex-shrink-0 group overflow-hidden"> {/* Reduced image heights */}
           <AnimatePresence initial={false} custom={animationDirection} mode="wait">
             <motion.div
-              key={currentImage} 
+              key={currentImage}
               custom={animationDirection}
               variants={imageVariants}
               initial="enter"
@@ -115,8 +128,8 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
                 layout="fill"
                 objectFit="cover"
                 data-ai-hint={item.aiHint || "project image"}
-                className="rounded-t-lg" 
-                priority={true} 
+                className="rounded-t-lg"
+                priority={true}
               />
             </motion.div>
           </AnimatePresence>
@@ -143,16 +156,16 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
             </>
           )}
         </div>
-        
+
         {allImages.length > 1 && (
           <div className="flex p-2 sm:p-3 bg-muted space-x-1.5 sm:space-x-2 overflow-x-auto flex-shrink-0">
             {allImages.map((thumb, idx) => (
-              <button 
-                key={idx} 
+              <button
+                key={idx}
                 onClick={() => handleThumbnailClick(thumb, idx)}
                 className={`flex-shrink-0 w-16 h-12 sm:w-20 sm:h-14 relative rounded-md overflow-hidden border-2 ${
-                  currentImageIndex === idx 
-                    ? 'border-primary ring-2 ring-primary ring-offset-2 ring-offset-muted' 
+                  currentImageIndex === idx
+                    ? 'border-primary ring-2 ring-primary ring-offset-2 ring-offset-muted'
                     : 'border-transparent hover:border-primary/70'
                 } focus:outline-none focus:ring-2 focus:ring-primary/70 focus:ring-offset-1 focus:ring-offset-muted transition-all duration-200 ease-in-out`}
                 aria-label={`Ver imagen ${idx + 1}`}
@@ -167,7 +180,7 @@ export default function PortfolioDetailModal({ item, isOpen, onClose }: Portfoli
           <DialogHeader>
             <DialogTitle className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground leading-tight">{item.title}</DialogTitle>
           </DialogHeader>
-          
+
           <div className="flex flex-wrap gap-x-3 sm:gap-x-4 md:gap-x-6 gap-y-1 sm:gap-y-2 text-xs sm:text-sm text-muted-foreground items-center">
             <div className="flex items-center"><CalendarDays className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 text-primary" /> {item.date}</div>
             <div className="flex items-center"><Tag className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 text-primary" /> {item.category}</div>
