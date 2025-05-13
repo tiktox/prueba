@@ -88,8 +88,7 @@ export default function ServiceRequestModal({
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="flex-grow p-6 min-h-0" style={{ maxHeight: 'calc(85vh - 10rem)' }}> 
-          {/* Adjusted max-height to better fit content within modal constraints */}
+        <ScrollArea className="flex-grow p-6 min-h-0"> 
           {/* min-h-0 is important for flex-grow to work correctly with scrollarea in some flex contexts */}
           <RadioGroup value={selectedService ?? undefined} onValueChange={setSelectedService} className="space-y-3">
             {servicesData.map((service) => (
