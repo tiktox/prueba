@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -42,16 +41,7 @@ export default function ServiceRequestModal({
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const handleModalOpenChange = (openStatus: boolean) => {
-    if (!openStatus) { // If the modal is closing or has closed
-      setSelectedService(null); // Reset internal selection
-      onClose(); // Notify parent to update its state (e.g., set isOpen to false)
-    }
-    // If openStatus is true, it means the dialog is trying to open.
-    // The `isOpen` prop from parent controls this, so no action needed for opening here.
-  };
-
-  const handleSend = () => {
+  const handleSendRequest = () => {
     if (!selectedService) {
       toast({
         title: "Selección Requerida",
@@ -69,20 +59,17 @@ export default function ServiceRequestModal({
     if (typeof window !== "undefined") {
         window.open(whatsappUrl, "_blank");
     }
-    // Request parent to close the modal.
-    // `handleModalOpenChange` will then be triggered with `false`, resetting `selectedService`.
-    onClose(); 
-  };
-
-  const handleCancel = () => {
-    // Request parent to close the modal.
-    // `handleModalOpenChange` will then be triggered with `false`, resetting `selectedService`.
-    onClose();
+    onClose(); // Close modal after attempting to open WhatsApp
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleModalOpenChange}>
-      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]">
+    <Dialog open={isOpen} onOpenChange={(open) => {
+      if (!open) {
+        setSelectedService(null); // Reset selection on close
+        onClose(); // Call onClose function when dialog is closed
+      }
+    }}>
+      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[80vh]">
         <DialogHeader className="p-6 pb-4 border-b border-border flex-shrink-0">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl sm:text-2xl font-semibold text-foreground flex items-center">
@@ -101,6 +88,7 @@ export default function ServiceRequestModal({
         </DialogHeader>
 
         <ScrollArea className="flex-grow p-6 min-h-0"> 
+          {/* min-h-0 is important for flex-grow to work correctly with scrollarea in some flex contexts */}
           <RadioGroup value={selectedService ?? undefined} onValueChange={setSelectedService} className="space-y-3">
             {servicesData.map((service) => (
               <div key={service.title} className="flex items-center space-x-3 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors">
@@ -114,10 +102,10 @@ export default function ServiceRequestModal({
         </ScrollArea>
         
         <DialogFooter className="p-6 pt-4 border-t border-border flex-shrink-0">
-          <Button onClick={handleCancel} variant="outline">
+          <Button onClick={onClose} variant="outline">
             Cancelar
           </Button>
-          <Button onClick={handleSend} className="group" disabled={!selectedService}>
+          <Button onClick={handleSendRequest} className="group" disabled={!selectedService}>
             Enviar por WhatsApp
             <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
