@@ -42,9 +42,10 @@ export default function ServiceRequestModal({
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const { toast } = useToast();
 
+  // Effect to reset selected service when modal is closed (isOpen becomes false)
   useEffect(() => {
     if (!isOpen) {
-      setSelectedService(null); // Reset selection when modal is closed
+      setSelectedService(null);
     }
   }, [isOpen]);
 
@@ -69,16 +70,16 @@ export default function ServiceRequestModal({
     onClose(); // Close modal after attempting to open WhatsApp
   };
 
-  const handleCancel = () => {
-    onClose(); // This will trigger the useEffect to reset selectedService
-  };
-
-  // The Dialog's onOpenChange will call `onClose` when the dialog is closed by internal Radix mechanisms (Esc, overlay click, X button)
-  // This ensures the parent state (`isModalOpen` in ServiceRequestFab) is updated.
-  // The useEffect above will then handle resetting `selectedService`.
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]">
+    <Dialog open={isOpen} onOpenChange={(openState) => {
+      // This onOpenChange is triggered by Radix Dialog for internal close events (X, Esc, overlay)
+      // It should directly call the parent's onClose handler.
+      if (!openState) {
+        onClose();
+      }
+      // Note: setSelectedService(null) is now handled by the useEffect listening to `isOpen`
+    }}>
+      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]"> {/* Ensure max-h for scrollability */}
         <DialogHeader className="p-6 pb-4 border-b border-border flex-shrink-0">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl sm:text-2xl font-semibold text-foreground flex items-center">
@@ -97,7 +98,7 @@ export default function ServiceRequestModal({
         </DialogHeader>
 
         <ScrollArea className="flex-grow p-6 min-h-0"> 
-          <RadioGroup value={selectedService ?? undefined} onValueChange={setSelectedService} className="space-y-3">
+          <RadioGroup value={selectedService ?? ""} onValueChange={setSelectedService} className="space-y-3">
             {servicesData.map((service) => (
               <div key={service.title} className="flex items-center space-x-3 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value={service.title} id={service.title.replace(/\s+/g, '-')} />
@@ -110,9 +111,11 @@ export default function ServiceRequestModal({
         </ScrollArea>
         
         <DialogFooter className="p-6 pt-4 border-t border-border flex-shrink-0">
-          <Button onClick={handleCancel} variant="outline">
-            Cancelar
-          </Button>
+          <DialogClose asChild>
+            <Button variant="outline">
+              Cancelar
+            </Button>
+          </DialogClose>
           <Button onClick={handleSendRequest} className="group" disabled={!selectedService}>
             Enviar por WhatsApp
             <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
