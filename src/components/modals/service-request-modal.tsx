@@ -70,7 +70,7 @@ export default function ServiceRequestModal({
       }
       onClose();
     }}>
-      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[85vh]">
+      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]">
         <DialogHeader className="p-6 pb-4 border-b border-border flex-shrink-0">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl sm:text-2xl font-semibold text-foreground flex items-center">
@@ -115,4 +115,3 @@ export default function ServiceRequestModal({
     </Dialog>
   );
 }
-
