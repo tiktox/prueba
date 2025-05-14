@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -6,9 +5,9 @@ import { Toaster } from '@/components/ui/toaster';
 // import { AuthProvider } from '@/components/auth/auth-provider'; // Assuming this will be created
 // import AppHeader from '@/components/layout/AppHeader'; // Assuming this will be created
 import { ThemeProvider } from '@/components/theme-provider';
-import FloatingActionButton from '@/components/custom/floating-action-button';
+import FloatingActionButtonWrapper from '@/components/custom/floating-action-button-wrapper';
 import InvestmentFabWrapper from '@/components/custom/investment-fab-wrapper';
-import ServiceRequestFab from '@/components/custom/service-request-fab';
+import ServiceRequestFabWrapper from '@/components/custom/service-request-fab-wrapper';
 
 
 // Placeholder for AppHeader - will be created later if requested
@@ -19,6 +18,7 @@ const AppHeader = () => (
 );
 
 // Placeholder for AuthProvider - will be created later if requested
+// The current AuthProvider is effectively ThemeProvider
 const AuthProvider = ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider
     attribute="class"
@@ -90,9 +90,9 @@ export default function RootLayout({
             {children}
           </main>
           <Toaster />
-          <FloatingActionButton />
+          <FloatingActionButtonWrapper />
           <InvestmentFabWrapper /> 
-          <ServiceRequestFab />
+          <ServiceRequestFabWrapper />
         </AuthProvider>
       </body>
     </html>
