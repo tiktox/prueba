@@ -42,7 +42,7 @@ export default function ServiceRequestModal({
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Effect to reset selected service when modal is closed (isOpen becomes false)
+  // Effect to reset selected service when modal is closed
   useEffect(() => {
     if (!isOpen) {
       setSelectedService(null);
@@ -70,22 +70,24 @@ export default function ServiceRequestModal({
     onClose(); // Close modal after attempting to open WhatsApp
   };
 
+  // This handler is for the Dialog's onOpenChange event.
+  // It ensures the parent's onClose is called when the dialog's open state changes.
+  const handleDialogValidService = (open: boolean) => {
+    if (!open) {
+      onClose(); // This will trigger the useEffect because isOpen prop (from parent) will change
+    }
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={(openState) => {
-      // This onOpenChange is triggered by Radix Dialog for internal close events (X, Esc, overlay)
-      // It should directly call the parent's onClose handler.
-      if (!openState) {
-        onClose();
-      }
-      // Note: setSelectedService(null) is now handled by the useEffect listening to `isOpen`
-    }}>
-      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]"> {/* Ensure max-h for scrollability */}
+    <Dialog open={isOpen} onOpenChange={handleDialogValidService}>
+      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]"> {/* Adjusted max-h for scroll testing */}
         <DialogHeader className="p-6 pb-4 border-b border-border flex-shrink-0">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl sm:text-2xl font-semibold text-foreground flex items-center">
               <ShoppingBag className="h-6 w-6 mr-3 text-primary" />
               Solicitar Servicio
             </DialogTitle>
+            {/* DialogClose uses Radix's internal mechanism to trigger onOpenChange */}
             <DialogClose asChild>
               <Button variant="ghost" size="icon" aria-label="Cerrar">
                 <X className="h-5 w-5" />
@@ -111,11 +113,10 @@ export default function ServiceRequestModal({
         </ScrollArea>
         
         <DialogFooter className="p-6 pt-4 border-t border-border flex-shrink-0">
-          <DialogClose asChild>
-            <Button variant="outline">
-              Cancelar
-            </Button>
-          </DialogClose>
+          {/* Cancel button now also directly calls onClose to signal parent */}
+          <Button onClick={onClose} variant="outline">
+            Cancelar
+          </Button>
           <Button onClick={handleSendRequest} className="group" disabled={!selectedService}>
             Enviar por WhatsApp
             <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
