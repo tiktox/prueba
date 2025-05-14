@@ -60,17 +60,19 @@ export default function ServiceRequestModal({
     if (typeof window !== "undefined") {
         window.open(whatsappUrl, "_blank");
     }
+    setSelectedService(null); // Reset selection after sending
     onClose(); // Close modal after attempting to open WhatsApp
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => {
       if (!open) {
-        setSelectedService(null); // Reset selection on close
+        setSelectedService(null); // Reset selection when dialog is closed by any means
+        onClose(); // Call onClose function when dialog is closed
       }
-      onClose();
+      // No specific action needed if `open` is true here, as `isOpen` prop controls it.
     }}>
-      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]">
+      <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]"> {/* Adjusted max-h */}
         <DialogHeader className="p-6 pb-4 border-b border-border flex-shrink-0">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl sm:text-2xl font-semibold text-foreground flex items-center">
@@ -78,7 +80,7 @@ export default function ServiceRequestModal({
               Solicitar Servicio
             </DialogTitle>
             <DialogClose asChild>
-              <Button variant="ghost" size="icon" onClick={onClose} aria-label="Cerrar">
+              <Button variant="ghost" size="icon" aria-label="Cerrar">
                 <X className="h-5 w-5" />
               </Button>
             </DialogClose>
@@ -103,7 +105,13 @@ export default function ServiceRequestModal({
         </ScrollArea>
         
         <DialogFooter className="p-6 pt-4 border-t border-border flex-shrink-0">
-          <Button onClick={onClose} variant="outline">
+          <Button 
+            onClick={() => {
+              setSelectedService(null); // Reset selection
+              onClose(); // Call original close handler
+            }} 
+            variant="outline"
+          >
             Cancelar
           </Button>
           <Button onClick={handleSendRequest} className="group" disabled={!selectedService}>
