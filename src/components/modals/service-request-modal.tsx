@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -41,6 +42,12 @@ export default function ServiceRequestModal({
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const { toast } = useToast();
 
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedService(null); // Reset selection when modal is closed
+    }
+  }, [isOpen]);
+
   const handleSendRequest = () => {
     if (!selectedService) {
       toast({
@@ -62,13 +69,15 @@ export default function ServiceRequestModal({
     onClose(); // Close modal after attempting to open WhatsApp
   };
 
+  const handleCancel = () => {
+    onClose(); // This will trigger the useEffect to reset selectedService
+  };
+
+  // The Dialog's onOpenChange will call `onClose` when the dialog is closed by internal Radix mechanisms (Esc, overlay click, X button)
+  // This ensures the parent state (`isModalOpen` in ServiceRequestFab) is updated.
+  // The useEffect above will then handle resetting `selectedService`.
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => {
-      if (!open) {
-        setSelectedService(null); // Reset selection on close
-        onClose(); // Call onClose function when dialog is closed
-      }
-    }}>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md w-[95vw] p-0 shadow-2xl rounded-lg flex flex-col max-h-[50vh]">
         <DialogHeader className="p-6 pb-4 border-b border-border flex-shrink-0">
           <div className="flex items-center justify-between">
@@ -88,7 +97,6 @@ export default function ServiceRequestModal({
         </DialogHeader>
 
         <ScrollArea className="flex-grow p-6 min-h-0"> 
-          {/* min-h-0 is important for flex-grow to work correctly with scrollarea in some flex contexts */}
           <RadioGroup value={selectedService ?? undefined} onValueChange={setSelectedService} className="space-y-3">
             {servicesData.map((service) => (
               <div key={service.title} className="flex items-center space-x-3 p-3 border border-border rounded-md hover:bg-muted/50 transition-colors">
@@ -102,7 +110,7 @@ export default function ServiceRequestModal({
         </ScrollArea>
         
         <DialogFooter className="p-6 pt-4 border-t border-border flex-shrink-0">
-          <Button onClick={onClose} variant="outline">
+          <Button onClick={handleCancel} variant="outline">
             Cancelar
           </Button>
           <Button onClick={handleSendRequest} className="group" disabled={!selectedService}>
