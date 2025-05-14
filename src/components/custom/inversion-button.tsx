@@ -1,4 +1,4 @@
-// src/components/custom/inversion-button.tsx
+
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Briefcase, Info } from "lucide-react";
 import { motion, useAnimation, AnimatePresence, type Variants } from "framer-motion";
+import InvestmentModal from "@/components/modals/investment-modal";
 
 const LONG_PRESS_DURATION = 2000; // 2 seconds
 const ELECTRIC_BLUE = "hsl(var(--primary))"; 
@@ -43,7 +44,7 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
   const [particles, setParticles] = useState<ParticleState[]>([]);
   const [lightningStreaks, setLightningStreaks] = useState<LightningState[]>([]);
 
-  const pressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const pressTimerRef = useRef<NodeJS.Timeout | number | null>(null); // Corrected type
   const helpTooltipTimerRef = useRef<NodeJS.Timeout | null>(null);
   const idleAnimationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -80,7 +81,13 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
 
       return () => {
         mediaQuery.removeEventListener("change", handleChange);
-        if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
+        if (pressTimerRef.current !== null) {
+          if (typeof pressTimerRef.current === 'number') {
+            clearInterval(pressTimerRef.current);
+          } else {
+            clearTimeout(pressTimerRef.current);
+          }
+        }
         if (helpTooltipTimerRef.current) clearTimeout(helpTooltipTimerRef.current);
         if (idleAnimationIntervalRef.current) clearInterval(idleAnimationIntervalRef.current);
       }
@@ -105,7 +112,6 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
       return;
     }
 
-    // This part runs only if isMounted, !prefersReducedMotion, and !isPressing
     const animateCycle = () => {
       setCurrentHaloColor(prevHaloColor => {
         const nextColor = prevHaloColor === ELECTRIC_BLUE ? NEON_MINT_COLOR : ELECTRIC_BLUE;
@@ -130,10 +136,12 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
       });
     };
     
-    if (!idleAnimationIntervalRef.current) { // Start immediately if no interval running
+    if (!idleAnimationIntervalRef.current) { 
       animateCycle();
     }
-    const intervalId = setInterval(animateCycle, Math.random() * 2000 + 3000);
+    // Use Math.random() for interval delay only on client after mount
+    const randomDelay = isMounted ? Math.random() * 2000 + 3000 : 3000;
+    const intervalId = setInterval(animateCycle, randomDelay);
     idleAnimationIntervalRef.current = intervalId;
 
     return () => {
@@ -142,20 +150,31 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
         idleAnimationIntervalRef.current = null;
       }
     };
-  }, [isMounted, prefersReducedMotion, isPressing, haloControls, shadowControls, lightningControls]);
+  }, [isMounted, prefersReducedMotion, isPressing, haloControls, shadowControls, lightningControls, currentHaloColor]);
 
 
   const isPressingRef = React.useRef(isPressing);
   useEffect(() => { isPressingRef.current = isPressing; }, [isPressing]);
 
+  const clearExistingPressTimer = () => {
+    if (pressTimerRef.current !== null) {
+      if (typeof pressTimerRef.current === 'number') {
+        clearInterval(pressTimerRef.current as number);
+      } else {
+        clearTimeout(pressTimerRef.current as NodeJS.Timeout);
+      }
+      pressTimerRef.current = null;
+    }
+  };
+
   const startPress = useCallback(() => {
+    clearExistingPressTimer(); // Clear any existing timer first
+
     if (helpTooltipTimerRef.current) clearTimeout(helpTooltipTimerRef.current);
     setShowHelpTooltip(false);
-    setIsPressing(true); // This will trigger the idle useEffect to stop idle animations
+    setIsPressing(true); 
     setPressProgress(0);
 
-    // No need to explicitly clear idleAnimationIntervalRef.current here,
-    // the change in `isPressing` state will cause the idle useEffect to handle it.
     lightningControls.start({ opacity: 0, transition: {duration: 0.1} }); 
 
     if (!prefersReducedMotion) {
@@ -175,24 +194,11 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
         transition: { duration: 8, ease: "linear", repeat: Infinity } 
       });
       haloControls.start({ scale: 1.1, opacity: 0.3, transition: { duration: 0.3 } });
-
-    } else { 
-        let currentProgressVal = 0; 
-        const interval = setInterval(() => {
-            currentProgressVal += (100 / (LONG_PRESS_DURATION / 50));
-            setPressProgress(Math.min(currentProgressVal, 100) / 100);
-            if (currentProgressVal >= 100) clearInterval(interval);
-        }, 50);
-        if (pressTimerRef.current && typeof pressTimerRef.current === 'number') clearTimeout(pressTimerRef.current);
-        // @ts-ignore
-        pressTimerRef.current = interval;
-    }
-
-    const longPressCompletionTimer = setTimeout(() => {
-      if (isPressingRef.current) { 
-        if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(10);
-        
-        if (!prefersReducedMotion) {
+      
+      pressTimerRef.current = setTimeout(() => {
+        if (isPressingRef.current) { 
+          if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(10);
+          
           fabControls.start({ scale: [1, 0.9, 1.2, 1], transition: { duration: 0.4, ease: "circOut", times: [0, 0.3, 0.7, 1] } });
           shockwaveControls.start({
             scale: [0.5, 3], 
@@ -201,30 +207,40 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
           });
           individualParticleControls.start({ opacity: 0, scale: 0.5, transition: { duration: 0.4 } });
           particleGroupControls.stop();
+          
+          onOpenModal();
+          resetPressState(true); 
         }
-        
-        onOpenModal();
-        resetPressState(true); 
-      }
-    }, LONG_PRESS_DURATION);
-    if (!prefersReducedMotion && pressTimerRef.current && typeof pressTimerRef.current === 'number') clearTimeout(pressTimerRef.current)
-    if (!prefersReducedMotion) pressTimerRef.current = longPressCompletionTimer;
+      }, LONG_PRESS_DURATION);
 
+    } else { 
+        let currentProgressVal = 0; 
+        const intervalId = setInterval(() => {
+            if (!isPressingRef.current) { // Check if press was cancelled
+                clearInterval(intervalId);
+                resetPressState(false);
+                return;
+            }
+            currentProgressVal += (100 / (LONG_PRESS_DURATION / 50));
+            setPressProgress(Math.min(currentProgressVal, 100) / 100);
+            if (currentProgressVal >= 100) {
+                clearInterval(intervalId);
+                if (isPressingRef.current) {
+                    if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(10);
+                    onOpenModal();
+                    resetPressState(true);
+                }
+            }
+        }, 50);
+        pressTimerRef.current = intervalId;
+    }
   }, [prefersReducedMotion, progressRingControls, onOpenModal, fabControls, shockwaveControls, individualParticleControls, particleGroupControls, haloControls, lightningControls, setCurrentHaloColor]);
 
 
   const cancelPress = useCallback(() => {
-    if (pressTimerRef.current) {
-        if (typeof pressTimerRef.current === 'number') { // For setTimeout
-            clearTimeout(pressTimerRef.current);
-        } else { // For setInterval (used in reduced motion)
-             // @ts-ignore
-            clearInterval(pressTimerRef.current);
-        }
-        pressTimerRef.current = null;
-    }
+    clearExistingPressTimer();
     
-    const currentNormalizedProgress = pressProgress; // pressProgress is already 0-1
+    const currentNormalizedProgress = pressProgress; 
     if (isPressingRef.current && currentNormalizedProgress > 0 && currentNormalizedProgress < 0.95) { 
         setShowHelpTooltip(true);
         if (helpTooltipTimerRef.current) clearTimeout(helpTooltipTimerRef.current);
@@ -232,10 +248,10 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
     }
     
     resetPressState(false); 
-  }, [pressProgress, prefersReducedMotion]);
+  }, [pressProgress]); // Removed prefersReducedMotion from deps as clearExistingPressTimer handles it
 
   const resetPressState = (completed: boolean) => {
-    setIsPressing(false); // This will trigger the idle useEffect to restart idle animations
+    setIsPressing(false); 
     setPressProgress(0);
 
     if (!prefersReducedMotion) {
@@ -250,7 +266,6 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
             shockwaveControls.set({ scale: 0, opacity: 0 }); 
         }
     }
-    // Idle animations will be restarted by the main useEffect reacting to `isPressing` change.
   };
 
 
@@ -262,13 +277,13 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
 
   const handleFocus = () => {
     if (!isMounted || prefersReducedMotion || isPressing) return;
-    if (idleAnimationIntervalRef.current) { // Stop normal idle animations
+    if (idleAnimationIntervalRef.current) { 
       clearInterval(idleAnimationIntervalRef.current);
       idleAnimationIntervalRef.current = null;
     }
     
     haloControls.start({
-        scale: [1, 1.4, 1], opacity: [0.2, 0.7, 0.2], backgroundColor: currentHaloColor, // Use currentHaloColor state
+        scale: [1, 1.4, 1], opacity: [0.2, 0.7, 0.2], backgroundColor: currentHaloColor,
         boxShadow: [`0 0 20px 5px ${currentHaloColor}66`, `0 0 30px 10px ${currentHaloColor}99`, `0 0 20px 5px ${currentHaloColor}66`],
         transition: { duration: 2.5 / 1.2, ease: "easeInOut", repeat: Infinity }
     });
@@ -282,19 +297,15 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
     if (!isMounted || prefersReducedMotion || isPressing) return;
     haloControls.stop(); 
     shadowControls.stop();
-    // The main idle useEffect will restart idle animations because `isPressing` is false 
-    // and the interval ref would be null or it will clear the existing one.
-    // To be certain it re-evaluates and starts a new cycle if needed:
     if (idleAnimationIntervalRef.current) {
         clearInterval(idleAnimationIntervalRef.current);
         idleAnimationIntervalRef.current = null;
     }
-    // The main idle useEffect will then take over.
   };
   
   const fabInitialAnimation: Variants = useMemo(() => ({
-    initial: { scale: 0, opacity: 0 }, // Start from 0 only on initial mount if not mounted
-    animate: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 260, damping: 20, delay: isMounted ? 0.2 : 1.2 } }, // shorter delay if already mounted
+    initial: { scale: 0, opacity: 0 },
+    animate: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 260, damping: 20, delay: isMounted ? 0.2 : 1.2 } },
   }), [isMounted]);
 
 
@@ -357,7 +368,7 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
                     stroke="hsl(var(--accent))"
                     strokeWidth="3"
                     strokeDasharray="283" 
-                    strokeDashoffset="283"
+                    strokeDashoffset="283" // Calculated from 2 * PI * 45
                     animate={progressRingControls} 
                     initial={{ pathLength: 0 }} 
                     transform="rotate(-90 50 50)" 
@@ -437,6 +448,7 @@ export default function InversionButton({ onOpenModal }: InversionButtonProps) {
           </TooltipContent>
         </Tooltip>
       </motion.div>
+      {/* Modal is now rendered by the wrapper InvestmentFabWrapper directly */}
     </TooltipProvider>
   );
 }
