@@ -7,7 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import FloatingActionButtonWrapper from '@/components/custom/floating-action-button-wrapper';
 import InvestmentFabWrapper from '@/components/custom/investment-fab-wrapper';
-import ServiceRequestFabWrapper from '@/components/custom/service-request-fab-wrapper';
+// Removed: import ServiceRequestFabWrapper from '@/components/custom/service-request-fab-wrapper';
 
 
 // Placeholder for AppHeader - will be created later if requested
@@ -92,7 +92,7 @@ export default function RootLayout({
           <Toaster />
           <FloatingActionButtonWrapper />
           <InvestmentFabWrapper /> 
-          <ServiceRequestFabWrapper />
+          {/* Removed: <ServiceRequestFabWrapper /> */}
         </AuthProvider>
       </body>
     </html>
